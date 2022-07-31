@@ -1,7 +1,7 @@
 import test from 'ava'
 import { each } from 'test-each'
 
-import { truncate } from './helpers/main.js'
+import { truncate, truncateMinimum } from './helpers/main.js'
 import { STRINGS } from './helpers/strings.js'
 
 each(
@@ -26,15 +26,10 @@ each(
     test(`Truncate values | ${title}`, (t) => {
       const input = { value }
       const output = {}
-      const size = JSON.stringify(input).length
-      t.deepEqual(truncate(input, size), {
-        output: input,
-        omittedProps: [],
-      })
-      t.deepEqual(truncate(input, size - 1), {
-        output,
-        omittedProps: [{ path: ['value'], value }],
-      })
+      t.deepEqual(truncateMinimum(input), [
+        { output: input, omittedProps: [] },
+        { output, omittedProps: [{ path: ['value'], value }] },
+      ])
     })
   },
 )
