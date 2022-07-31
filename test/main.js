@@ -1,6 +1,6 @@
 import test from 'ava'
-import templateName from 'template-name'
+import truncateJson from 'truncate-json'
 
 test('Dummy test', (t) => {
-  t.is(typeof templateName, 'function')
+  t.is(typeof truncateJson, 'function')
 })

@@ -1,8 +1,8 @@
 import { expectType, expectAssignable } from 'tsd'
 
-import templateName, { Options } from './main.js'
+import truncateJson, { Options } from './main.js'
 
-expectType<object>(templateName(true))
+expectType<object>(truncateJson(true))
 
-templateName(true, {})
+truncateJson(true, {})
 expectAssignable<Options>({})
