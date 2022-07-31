@@ -2,20 +2,7 @@ import test from 'ava'
 import { each } from 'test-each'
 import truncateJson from 'truncate-json'
 
-const strings = [
-  'test',
-  '',
-  // Backslash sequences
-  '\n',
-  '\0',
-  // UTF-8 character
-  '𝌆',
-  // Valid UTF-8 sequences
-  '\uD834\uDF06',
-  // Invalid UTF-8 sequences
-  '\uDF06\uD834',
-  '\uDEAD',
-]
+import { STRINGS } from './helpers/strings.js'
 
 each(
   [
@@ -33,7 +20,7 @@ each(
     1e60,
     // eslint-disable-next-line no-magic-numbers
     1e-60,
-    ...strings,
+    ...STRINGS,
   ],
   ({ title }, value) => {
     test(`Truncate values | ${title}`, (t) => {
@@ -51,7 +38,7 @@ each(
   },
 )
 
-each([...strings], ({ title }, key) => {
+each([...STRINGS], ({ title }, key) => {
   test(`Truncate properties | ${title}`, (t) => {
     const input = { one: true, [key]: true }
     const jsonString = JSON.stringify(input)
