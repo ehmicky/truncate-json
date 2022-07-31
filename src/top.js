@@ -49,7 +49,7 @@ const truncateString = function (value, maxSize) {
   const bytes = stringToBytes(jsonString)
   const truncatedBytes = bytes.slice(
     QUOTE.length,
-    maxSize - ELLIPSIS.length - QUOTE.length,
+    Math.min(maxSize - ELLIPSIS.length, bytes.length) - QUOTE.length,
   )
   const truncatedString = bytesToString(truncatedBytes)
   const truncatedStringA = truncatedString.replace(INVALID_END_CHARS, '')
