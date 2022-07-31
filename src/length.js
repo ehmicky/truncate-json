@@ -1,4 +1,4 @@
-import { stringByteLength } from './byte.js'
+import stringByteLength from 'string-byte-length'
 
 // Retrieve the JSON length of a value, excluding its children.
 // eslint-disable-next-line max-statements, complexity

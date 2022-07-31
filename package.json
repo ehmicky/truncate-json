@@ -45,6 +45,9 @@
     "lib": "src",
     "test": "test"
   },
+  "dependencies": {
+    "string-byte-length": "^1.0.1"
+  },
   "devDependencies": {
     "@ehmicky/dev-tasks": "^1.0.84",
     "test-each": "^5.1.1"
