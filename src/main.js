@@ -3,7 +3,7 @@ import { truncateValue } from './value.js'
 
 // Truncate a JSON string
 export default function truncateJson(jsonString, maxSize) {
-  validateOptions(maxSize)
+  validateOptions(jsonString, maxSize)
   const value = parseJson(jsonString)
   const { value: valueA, omittedProps } = truncateValue({
     value,
@@ -17,10 +17,6 @@ export default function truncateJson(jsonString, maxSize) {
 }
 
 const parseJson = function (jsonString) {
-  if (typeof jsonString !== 'string') {
-    throw new TypeError(`Input must be a JSON string: ${jsonString}`)
-  }
-
   try {
     return JSON.parse(jsonString)
   } catch (error) {
