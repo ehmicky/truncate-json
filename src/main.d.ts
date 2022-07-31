@@ -9,4 +9,8 @@ export interface Options {}
  * ```js
  * ```
  */
-export default function truncateJson(value: any, options?: Options): object
+export default function truncateJson(
+  jsonString: string,
+  maxSize: number,
+  options?: Options,
+): string

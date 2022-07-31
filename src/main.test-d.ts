@@ -1,8 +1,10 @@
-import { expectType, expectAssignable } from 'tsd'
+import { expectType, expectAssignable, expectError } from 'tsd'
 
 import truncateJson, { Options } from './main.js'
 
-expectType<object>(truncateJson(true))
+expectType<string>(truncateJson('{}', 2))
+expectError(truncateJson({}, 2))
+expectError(truncateJson('{}', '2'))
 
-truncateJson(true, {})
+truncateJson('{}', 2, {})
 expectAssignable<Options>({})
