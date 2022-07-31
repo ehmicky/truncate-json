@@ -3,7 +3,6 @@ import { addSize } from './size.js'
 // Transform an object property or an array item
 export const transformProp = function ({
   parent,
-  changes,
   omittedProps,
   path,
   increment,
@@ -15,28 +14,31 @@ export const transformProp = function ({
 }) {
   const value = parent[key]
   const propPath = [...path, key]
-  const { size: sizeA, stop } = addSize({
+  const {
+    size: sizeA,
+    stop,
+    omittedProps: omittedPropsA,
+  } = addSize({
     size,
     increment,
     maxSize,
-    changes,
+    omittedProps,
     path: propPath,
     value,
   })
 
   if (stop) {
-    return { empty, size }
+    return { empty, size, omittedProps: omittedPropsA }
   }
 
   const { value: valueA, size: sizeB } = transformValue({
     value,
-    changes,
     omittedProps,
     path: propPath,
     size: sizeA,
     maxSize,
   })
   return valueA === undefined
-    ? { empty, size }
-    : { empty: false, size: sizeB, value: valueA }
+    ? { empty, size, omittedProps: omittedPropsA }
+    : { empty: false, size: sizeB, value: valueA, omittedProps: omittedPropsA }
 }

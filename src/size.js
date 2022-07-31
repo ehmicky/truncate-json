@@ -4,7 +4,7 @@
 //  - The truncation might make the value syntactically invalid, e.g. if it is a
 //    serialized value
 //  - This allows checking for strings being too large with `=== undefined`
-//    instead of inspecting the `changes`
+//    instead of inspecting the `omittedProps`
 // The top-level value itself might become `undefined` if either:
 //  - The `maxSize` option is very low (which is unlikely)
 //  - The top-level value is a very long string
@@ -20,15 +20,9 @@ export const addSize = function ({
   value,
 }) {
   const newSize = size + increment
-  const stop = newSize > maxSize
-
-  if (!stop) {
-    return { size: newSize, stop }
-  }
-
-  // eslint-disable-next-line fp/no-mutating-methods
-  omittedProps.push({ path, value })
-  return { size, stop }
+  return newSize > maxSize
+    ? { size, stop: true, omittedProps: [...omittedProps, { path, value }] }
+    : { size: newSize, stop: false, omittedProps }
 }
 
 // Compute the JSON size of a property value or top-level value
@@ -54,11 +48,6 @@ export const getObjectPropSize = function (key, empty) {
 // property keys) to take into account escaping, including:
 //  - Control characters and Unicode characters
 //  - Invalid Unicode sequences
-// This can throw if `value` is a large strings with many backslash sequences.
 const getJsonLength = function (value) {
-  try {
-    return JSON.stringify(value).length
-  } catch {
-    return Number.POSITIVE_INFINITY
-  }
+  return JSON.stringify(value).length
 }

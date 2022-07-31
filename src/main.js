@@ -4,10 +4,9 @@ import { addSize, getValueSize } from './size.js'
 
 export default function truncateJson(jsonString, maxSize) {
   const value = JSON.parse(jsonString)
-  const omittedProps = []
-  const { value: newValue } = transformValue({
+  const { value: newValue, omittedProps } = transformValue({
     value,
-    omittedProps,
+    omittedProps: [],
     path: [],
     size: 0,
     maxSize,
@@ -23,13 +22,17 @@ export default function truncateJson(jsonString, maxSize) {
 //     - This allows stopping logic when `maxSize` is reached, resulting in
 //       better performance
 //     - This favors removing fewer big fields instead of more small fields,
-//       resulting in fewer `changes`
+//       resulting in fewer `omittedProps`
 //     - This favors maximizing the number of fields within the allowed
 //       `maxSize`
 //  - This is easier to implement
 const transformValue = function ({ value, omittedProps, path, size, maxSize }) {
   const increment = getValueSize(value)
-  const { size: sizeA, stop } = addSize({
+  const {
+    size: sizeA,
+    stop,
+    omittedProps: omittedPropsA,
+  } = addSize({
     size,
     increment,
     maxSize,
@@ -38,26 +41,24 @@ const transformValue = function ({ value, omittedProps, path, size, maxSize }) {
     value,
   })
   return stop
-    ? { value: undefined, size }
-    : recurseValue({ value, omittedProps, path, size: sizeA, maxSize })
+    ? { value: undefined, size, omittedProps: omittedPropsA }
+    : recurseValue({
+        value,
+        omittedProps: omittedPropsA,
+        path,
+        size: sizeA,
+        maxSize,
+      })
 }
 
-const recurseValue = function ({
-  value,
-  changes,
-  omittedProps,
-  path,
-  size,
-  maxSize,
-}) {
+const recurseValue = function ({ value, omittedProps, path, size, maxSize }) {
   if (typeof value !== 'object' || value === null) {
-    return { value, size }
+    return { value, size, omittedProps }
   }
 
   return Array.isArray(value)
     ? recurseArray({
         array: value,
-        changes,
         omittedProps,
         path,
         size,
@@ -66,7 +67,6 @@ const recurseValue = function ({
       })
     : recurseObject({
         object: value,
-        changes,
         omittedProps,
         path,
         size,

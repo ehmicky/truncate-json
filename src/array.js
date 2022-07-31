@@ -6,7 +6,6 @@ import { getArrayItemSize } from './size.js'
 //  - Otherwise, `JSON.stringify()` would transform them to `null`
 export const recurseArray = function ({
   array,
-  changes,
   omittedProps,
   path,
   size,
@@ -23,7 +22,6 @@ export const recurseArray = function ({
     // eslint-disable-next-line fp/no-mutation
     state = transformProp({
       parent: array,
-      changes,
       omittedProps,
       path,
       increment,

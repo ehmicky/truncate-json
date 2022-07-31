@@ -9,7 +9,6 @@ import { getObjectPropSize } from './size.js'
 //  - This preserves the object properties order
 export const recurseObject = function ({
   object,
-  changes,
   omittedProps,
   path,
   size,
@@ -26,7 +25,6 @@ export const recurseObject = function ({
     // eslint-disable-next-line fp/no-mutation
     state = transformProp({
       parent: object,
-      changes,
       omittedProps,
       path,
       increment,
