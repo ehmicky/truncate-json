@@ -7,6 +7,8 @@ import { getObjectPropSize } from './size.js'
 // We iterate in `Reflect.ownKeys()` order, not in sorted keys order.
 //  - This is faster
 //  - This preserves the object properties order
+// Use imperative logic for performance reasons.
+/* eslint-disable fp/no-let, fp/no-loops, fp/no-mutation, max-depth */
 export const recurseObject = function ({
   object,
   omittedProps,
@@ -16,13 +18,13 @@ export const recurseObject = function ({
   truncateValue,
 }) {
   const newObject = {}
-  // eslint-disable-next-line fp/no-let
+
   let state = { empty: true, size, omittedProps }
 
-  // eslint-disable-next-line fp/no-loops, guard-for-in
+  // eslint-disable-next-line guard-for-in
   for (const key in object) {
     const increment = getObjectPropSize(key, state.empty)
-    // eslint-disable-next-line fp/no-mutation
+
     state = transformProp({
       parent: object,
       omittedProps: state.omittedProps,
@@ -35,9 +37,7 @@ export const recurseObject = function ({
       truncateValue,
     })
 
-    // eslint-disable-next-line max-depth
     if (state.value !== undefined) {
-      // eslint-disable-next-line fp/no-mutation
       newObject[key] = state.value
     }
   }
@@ -48,3 +48,4 @@ export const recurseObject = function ({
     omittedProps: state.omittedProps,
   }
 }
+/* eslint-enable fp/no-let, fp/no-loops, fp/no-mutation, max-depth */
