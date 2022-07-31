@@ -4,7 +4,7 @@ import truncateJson from 'truncate-json'
 
 import { STRINGS } from './helpers/strings.js'
 
-each([...STRINGS], ({ title }, key) => {
+each(STRINGS, ({ title }, key) => {
   test(`Truncate object properties | ${title}`, (t) => {
     const input = { one: true, [key]: true }
     const inputString = JSON.stringify(input)
