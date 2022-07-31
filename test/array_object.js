@@ -35,7 +35,14 @@ each(
       path: ['one', 'two'],
       value: { three: true },
     },
+    {
+      input: { one: { two: true, three: { four: true } } },
+      output: { one: { two: true } },
+      path: ['one', 'three'],
+      value: { four: true },
+    },
     { input: [[[true]]], output: [[]], path: [0, 0], value: [true] },
+    { input: [[true, [true]]], output: [[true]], path: [0, 1], value: [true] },
   ],
   ({ title }, { input, output, path, value }) => {
     test(`Do not recurse on big fields | ${title}`, (t) => {
