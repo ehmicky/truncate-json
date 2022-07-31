@@ -31,5 +31,8 @@ const checkMaxSizeType = function (maxSize) {
   }
 }
 
-// JSON size of [] and {}
-const MIN_MAX_SIZE = 2
+// Allows any top-level value:
+//  - null, true or false
+//  - {} or []
+//  - "a..." or 1e-300 (after maximum truncation)
+const MIN_MAX_SIZE = 6

@@ -3,16 +3,22 @@ import { each } from 'test-each'
 
 import { truncateToOutput } from './helpers/main.js'
 
+const bigStringLength = 1e3
+const bigString = 'a'.repeat(bigStringLength)
 each(
   [
-    { input: { one: true, prop: 0 }, output: { prop: 0 }, path: ['one'] },
-    { input: [true, 0], output: [0], path: [0] },
+    {
+      input: { one: bigString, prop: true },
+      output: { prop: true },
+      path: ['one'],
+    },
+    { input: [bigString, true], output: [true], path: [0] },
   ],
   ({ title }, { input, output, path }) => {
     test(`Omitted values are filtered and do not count towards maxSize | ${title}`, (t) => {
       t.deepEqual(truncateToOutput(input, output), {
         output,
-        omittedProps: [{ path, value: true }],
+        omittedProps: [{ path, value: bigString }],
       })
     })
   },
@@ -32,8 +38,18 @@ each(
       path: ['one', 'three'],
       value: { four: true },
     },
-    { input: [[[true]]], output: [[]], path: [0, 0], value: [true] },
-    { input: [[true, [true]]], output: [[true]], path: [0, 1], value: [true] },
+    {
+      input: { one: [[[true]]] },
+      output: { one: [[]] },
+      path: ['one', 0, 0],
+      value: [true],
+    },
+    {
+      input: { one: [[true, [true]]] },
+      output: { one: [[true]] },
+      path: ['one', 0, 1],
+      value: [true],
+    },
   ],
   ({ title }, { input, output, path, value }) => {
     test(`Do not recurse on big fields | ${title}`, (t) => {
