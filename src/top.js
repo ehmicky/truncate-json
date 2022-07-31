@@ -30,7 +30,9 @@ const truncateNumber = function (value, maxSize) {
 // eslint-disable-next-line max-params
 const truncateNumberPrecision = function (value, methodName, maxSize, size) {
   const valueString = value[methodName](size)
-  const valueStringA = valueString.replace(TRIMMED_NUMBER_REGEXP, '$1')
+  const valueStringA = valueString
+    .replace(POSITIVE_EXPONENT, '$1')
+    .replace(TRIMMED_NUMBER_REGEXP, '$1')
 
   if (valueStringA.length <= maxSize) {
     return valueStringA
@@ -41,6 +43,8 @@ const truncateNumberPrecision = function (value, methodName, maxSize, size) {
     : truncateNumberPrecision(value, methodName, maxSize, size - 1)
 }
 
+// + in exponent in optional in JSON
+const POSITIVE_EXPONENT = /(e)\+/iu
 // Trim trailing decimal zeros
 const TRIMMED_NUMBER_REGEXP = /\.?0*($|e)/iu
 
