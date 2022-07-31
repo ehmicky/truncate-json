@@ -61,16 +61,13 @@ const truncateString = function (value, maxSize) {
   return addQuotes(truncatedStringC)
 }
 
+const fixUnicodeSequenceEnd = function (truncatedString) {
+  return truncatedString.replace(INVALID_JSON_END, '')
+}
+
 // The truncation might happen in the middle of a backslash sequence, which is
 // invalid JSON. We trim it.
-const fixUnicodeSequenceEnd = function (truncatedString) {
-  try {
-    JSON.parse(addQuotes(truncatedString))
-    return truncatedString
-  } catch {
-    return fixUnicodeSequenceEnd(truncatedString.slice(0, -1))
-  }
-}
+const INVALID_JSON_END = /(\\|\\u[0-9a-fA-F]{0,3})$/u
 
 const removeQuotes = function (jsonString) {
   return jsonString.slice(QUOTE.length, -QUOTE.length)

@@ -36,6 +36,8 @@ each(
     { inputString: '"1\\n234"', outputString: '"1..."' },
     { inputString: '"1\\n2345"', outputString: '"1\\n..."', shift: 1 },
     { inputString: '"\\u0000"', outputString: '"..."' },
+    { inputString: '"\\u00001"', outputString: '"..."', shift: 1 },
+    { inputString: '"\\u000012"', outputString: '"..."', shift: 2 },
     { inputString: '"\\u0000123"', outputString: '"..."', shift: 3 },
     { inputString: '"\\u00001234"', outputString: '"\\u0000..."', shift: 4 },
     { inputString: '"\\u000012345"', outputString: '"\\u00001..."', shift: 5 },
