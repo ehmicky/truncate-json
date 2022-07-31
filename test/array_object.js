@@ -1,7 +1,7 @@
 import test from 'ava'
 import { each } from 'test-each'
 
-import { truncate } from './helpers/main.js'
+import { truncateToOutput } from './helpers/main.js'
 
 each(
   [
@@ -10,8 +10,7 @@ each(
   ],
   ({ title }, { input, output, path }) => {
     test(`Omitted values are filtered and do not count towards maxSize | ${title}`, (t) => {
-      const maxSize = JSON.stringify(output).length
-      t.deepEqual(truncate(input, maxSize), {
+      t.deepEqual(truncateToOutput(input, output), {
         output,
         omittedProps: [{ path, value: true }],
       })
@@ -38,8 +37,7 @@ each(
   ],
   ({ title }, { input, output, path, value }) => {
     test(`Do not recurse on big fields | ${title}`, (t) => {
-      const maxSize = JSON.stringify(output).length
-      t.deepEqual(truncate(input, maxSize), {
+      t.deepEqual(truncateToOutput(input, output), {
         output,
         omittedProps: [{ path, value }],
       })

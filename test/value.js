@@ -1,7 +1,7 @@
 import test from 'ava'
 import { each } from 'test-each'
 
-import { truncate, truncateMinimum } from './helpers/main.js'
+import { truncateMinimum, truncateToOutput } from './helpers/main.js'
 import { STRINGS } from './helpers/strings.js'
 
 each(
@@ -49,8 +49,7 @@ each(
   ],
   ({ title }, { input, output, path }) => {
     test(`Truncates in a depth-first manner | ${title}`, (t) => {
-      const maxSize = JSON.stringify(output).length
-      t.deepEqual(truncate(input, maxSize), {
+      t.deepEqual(truncateToOutput(input, output), {
         output,
         omittedProps: [{ path, value: true }],
       })
