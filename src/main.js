@@ -6,15 +6,15 @@ import { truncateValue } from './value.js'
 export default function truncateJson(jsonString, maxSize) {
   validateOptions(jsonString, maxSize)
   const value = parseJson(jsonString)
-  const { value: newValue, omittedProps } = truncateValue({
+  const { value: newValue, truncatedProps } = truncateValue({
     value,
-    omittedProps: [],
+    truncatedProps: [],
     path: [],
     size: 0,
     maxSize,
   })
   const newJsonString = serializeJson(newValue, value, maxSize)
-  return { jsonString: newJsonString, omittedProps }
+  return { jsonString: newJsonString, truncatedProps }
 }
 
 const parseJson = function (jsonString) {

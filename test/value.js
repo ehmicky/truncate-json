@@ -34,8 +34,8 @@ each(
       const input = { value }
       const output = {}
       t.deepEqual(truncateMinimum(input), [
-        { output: input, omittedProps: [] },
-        { output, omittedProps: [{ path: ['value'], value }] },
+        { output: input, truncatedProps: [] },
+        { output, truncatedProps: [{ path: ['value'], value }] },
       ])
     })
   },
@@ -48,7 +48,7 @@ each(
     test(`Some top-level values are never truncated | ${title}`, (t) => {
       t.deepEqual(truncateToSize(input, MIN_MAX_SIZE), {
         output: input,
-        omittedProps: [],
+        truncatedProps: [],
       })
     })
   },
@@ -71,7 +71,7 @@ each(
     test(`Truncates in a depth-first manner | ${title}`, (t) => {
       t.deepEqual(truncateToOutput(input, output), {
         output,
-        omittedProps: [{ path, value: 0 }],
+        truncatedProps: [{ path, value: 0 }],
       })
     })
   },

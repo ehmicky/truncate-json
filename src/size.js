@@ -4,7 +4,7 @@
 //  - The truncation might make the value syntactically invalid, e.g. if it is a
 //    serialized value
 //  - This allows checking for strings being too large with `=== undefined`
-//    instead of inspecting the `omittedProps`
+//    instead of inspecting the `truncatedProps`
 // The top-level value itself might become `undefined` if either:
 //  - The `maxSize` option is very low (which is unlikely)
 //  - The top-level value is a very long string
@@ -15,15 +15,15 @@ export const addSize = function ({
   size,
   increment,
   maxSize,
-  omittedProps,
+  truncatedProps,
   path,
   value,
 }) {
   const newSize = size + increment
   const stop = newSize > maxSize
   return stop
-    ? { size, stop, omittedProps: [...omittedProps, { path, value }] }
-    : { size: newSize, stop, omittedProps }
+    ? { size, stop, truncatedProps: [...truncatedProps, { path, value }] }
+    : { size: newSize, stop, truncatedProps }
 }
 
 // Compute the JSON size of a property value or top-level value

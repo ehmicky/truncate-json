@@ -9,21 +9,21 @@ import { getArrayItemSize } from './size.js'
    fp/no-mutating-methods, max-depth */
 export const truncateArray = function ({
   array,
-  omittedProps,
+  truncatedProps,
   path,
   size,
   maxSize,
   truncateValue,
 }) {
   const newArray = []
-  let state = { empty: true, size, omittedProps }
+  let state = { empty: true, size, truncatedProps }
 
   for (let index = 0; index < array.length; index += 1) {
     const increment = getArrayItemSize(state.empty)
 
     state = truncateProp({
       parent: array,
-      omittedProps: state.omittedProps,
+      truncatedProps: state.truncatedProps,
       path,
       increment,
       maxSize,
@@ -38,7 +38,11 @@ export const truncateArray = function ({
     }
   }
 
-  return { value: newArray, size: state.size, omittedProps: state.omittedProps }
+  return {
+    value: newArray,
+    size: state.size,
+    truncatedProps: state.truncatedProps,
+  }
 }
 /* eslint-enable fp/no-let, fp/no-loops, fp/no-mutation,
    fp/no-mutating-methods, max-depth */

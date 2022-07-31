@@ -22,7 +22,7 @@ each(
     test(`Truncate top-level numbers | ${title}`, (t) => {
       t.deepEqual(truncateJson(inputString, maxSize), {
         jsonString: outputString,
-        omittedProps: [{ path: [], value: Number(inputString) }],
+        truncatedProps: [{ path: [], value: Number(inputString) }],
       })
     })
   },

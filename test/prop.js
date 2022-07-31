@@ -9,8 +9,8 @@ each(STRINGS, ({ title }, key) => {
     const input = { one: true, [key]: true }
     const output = { one: true }
     t.deepEqual(truncateMinimum(input), [
-      { output: input, omittedProps: [] },
-      { output, omittedProps: [{ path: [key], value: true }] },
+      { output: input, truncatedProps: [] },
+      { output, truncatedProps: [{ path: [key], value: true }] },
     ])
   })
 })

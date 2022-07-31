@@ -6,14 +6,14 @@ import { getObjectPropSize } from './size.js'
 /* eslint-disable fp/no-let, fp/no-loops, fp/no-mutation, max-depth */
 export const truncateObject = function ({
   object,
-  omittedProps,
+  truncatedProps,
   path,
   size,
   maxSize,
   truncateValue,
 }) {
   const newObject = {}
-  let state = { empty: true, size, omittedProps }
+  let state = { empty: true, size, truncatedProps }
 
   // eslint-disable-next-line guard-for-in
   for (const key in object) {
@@ -21,7 +21,7 @@ export const truncateObject = function ({
 
     state = truncateProp({
       parent: object,
-      omittedProps: state.omittedProps,
+      truncatedProps: state.truncatedProps,
       path,
       increment,
       maxSize,
@@ -39,7 +39,7 @@ export const truncateObject = function ({
   return {
     value: newObject,
     size: state.size,
-    omittedProps: state.omittedProps,
+    truncatedProps: state.truncatedProps,
   }
 }
 /* eslint-enable fp/no-let, fp/no-loops, fp/no-mutation, max-depth */

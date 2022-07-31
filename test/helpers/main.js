@@ -16,7 +16,7 @@ export const truncateToOutput = function (input, output) {
 // Call main function to truncate an `input` towards a specific size
 export const truncateToSize = function (input, maxSize) {
   const inputString = JSON.stringify(input)
-  const { jsonString, omittedProps } = truncateJson(inputString, maxSize)
+  const { jsonString, truncatedProps } = truncateJson(inputString, maxSize)
   const output = JSON.parse(jsonString)
-  return { output, omittedProps }
+  return { output, truncatedProps }
 }

@@ -18,7 +18,7 @@ each(
     test(`Omitted values are filtered and do not count towards maxSize | ${title}`, (t) => {
       t.deepEqual(truncateToOutput(input, output), {
         output,
-        omittedProps: [{ path, value: bigString }],
+        truncatedProps: [{ path, value: bigString }],
       })
     })
   },
@@ -55,7 +55,7 @@ each(
     test(`Do not recurse on big fields | ${title}`, (t) => {
       t.deepEqual(truncateToOutput(input, output), {
         output,
-        omittedProps: [{ path, value }],
+        truncatedProps: [{ path, value }],
       })
     })
   },

@@ -5,7 +5,7 @@ import { addSize, getValueSize } from './size.js'
 // Truncate a value to fit within a specific JSON size
 export const truncateValue = function ({
   value,
-  omittedProps,
+  truncatedProps,
   path,
   size,
   maxSize,
@@ -14,20 +14,20 @@ export const truncateValue = function ({
   const {
     size: sizeA,
     stop,
-    omittedProps: omittedPropsA,
+    truncatedProps: truncatedPropsA,
   } = addSize({
     size,
     increment,
     maxSize,
-    omittedProps,
+    truncatedProps,
     path,
     value,
   })
   return stop
-    ? { value: undefined, size: sizeA, omittedProps: omittedPropsA }
+    ? { value: undefined, size: sizeA, truncatedProps: truncatedPropsA }
     : recurseValue({
         value,
-        omittedProps: omittedPropsA,
+        truncatedProps: truncatedPropsA,
         path,
         size: sizeA,
         maxSize,
@@ -40,18 +40,18 @@ export const truncateValue = function ({
 //  - This allows stopping logic when `maxSize` is reached, resulting in
 //    better performance
 //  - This favors removing fewer big fields instead of more small fields,
-//    resulting in fewer `omittedProps`
+//    resulting in fewer `truncatedProps`
 //  - This favors maximizing the number of fields within the allowed `maxSize`
 //  - This is easier to implement
-const recurseValue = function ({ value, omittedProps, path, size, maxSize }) {
+const recurseValue = function ({ value, truncatedProps, path, size, maxSize }) {
   if (typeof value !== 'object' || value === null) {
-    return { value, size, omittedProps }
+    return { value, size, truncatedProps }
   }
 
   return Array.isArray(value)
     ? truncateArray({
         array: value,
-        omittedProps,
+        truncatedProps,
         path,
         size,
         maxSize,
@@ -59,7 +59,7 @@ const recurseValue = function ({ value, omittedProps, path, size, maxSize }) {
       })
     : truncateObject({
         object: value,
-        omittedProps,
+        truncatedProps,
         path,
         size,
         maxSize,
