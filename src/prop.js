@@ -31,7 +31,11 @@ export const transformProp = function ({
     return { empty, size, omittedProps: omittedPropsA }
   }
 
-  const { value: valueA, size: sizeB } = transformValue({
+  const {
+    value: valueA,
+    size: sizeB,
+    omittedProps: omittedPropsB,
+  } = transformValue({
     value,
     omittedProps,
     path: propPath,
@@ -39,6 +43,6 @@ export const transformProp = function ({
     maxSize,
   })
   return valueA === undefined
-    ? { empty, size, omittedProps: omittedPropsA }
-    : { empty: false, size: sizeB, value: valueA, omittedProps: omittedPropsA }
+    ? { empty, size, omittedProps: omittedPropsB }
+    : { empty: false, size: sizeB, value: valueA, omittedProps: omittedPropsB }
 }

@@ -4,14 +4,14 @@ import { addSize, getValueSize } from './size.js'
 
 export default function truncateJson(jsonString, maxSize) {
   const value = parseJson(jsonString)
-  const { value: newValue, omittedProps } = transformValue({
+  const { value: valueA, omittedProps } = transformValue({
     value,
     omittedProps: [],
     path: [],
     size: 0,
     maxSize,
   })
-  const jsonStringA = JSON.serialize(newValue)
+  const jsonStringA = JSON.serialize(valueA)
   return { jsonString: jsonStringA, omittedProps }
 }
 

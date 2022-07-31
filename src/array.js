@@ -14,7 +14,7 @@ export const recurseArray = function ({
 }) {
   const newArray = []
   // eslint-disable-next-line fp/no-let
-  let state = { empty: true, size }
+  let state = { empty: true, size, omittedProps }
 
   // eslint-disable-next-line fp/no-loops, fp/no-mutation, fp/no-let
   for (let index = 0; index < array.length; index += 1) {
@@ -22,7 +22,7 @@ export const recurseArray = function ({
     // eslint-disable-next-line fp/no-mutation
     state = transformProp({
       parent: array,
-      omittedProps,
+      omittedProps: state.omittedProps,
       path,
       increment,
       maxSize,
@@ -39,5 +39,5 @@ export const recurseArray = function ({
     }
   }
 
-  return { value: newArray, size: state.size }
+  return { value: newArray, size: state.size, omittedProps: state.omittedProps }
 }

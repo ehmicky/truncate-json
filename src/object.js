@@ -17,7 +17,7 @@ export const recurseObject = function ({
 }) {
   const newObject = {}
   // eslint-disable-next-line fp/no-let
-  let state = { empty: true, size }
+  let state = { empty: true, size, omittedProps }
 
   // eslint-disable-next-line fp/no-loops, guard-for-in
   for (const key in object) {
@@ -25,7 +25,7 @@ export const recurseObject = function ({
     // eslint-disable-next-line fp/no-mutation
     state = transformProp({
       parent: object,
-      omittedProps,
+      omittedProps: state.omittedProps,
       path,
       increment,
       maxSize,
@@ -42,5 +42,9 @@ export const recurseObject = function ({
     }
   }
 
-  return { value: newObject, size: state.size }
+  return {
+    value: newObject,
+    size: state.size,
+    omittedProps: state.omittedProps,
+  }
 }
