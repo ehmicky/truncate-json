@@ -13,7 +13,7 @@ export const transformProp = function ({
   truncateValue,
 }) {
   const value = parent[key]
-  const propPath = [...path, key]
+  const pathA = [...path, key]
   const {
     size: sizeA,
     stop,
@@ -23,7 +23,7 @@ export const transformProp = function ({
     increment,
     maxSize,
     omittedProps,
-    path: propPath,
+    path: pathA,
     value,
   })
 
@@ -38,7 +38,7 @@ export const transformProp = function ({
   } = truncateValue({
     value,
     omittedProps,
-    path: propPath,
+    path: pathA,
     size: sizeA,
     maxSize,
   })
