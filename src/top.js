@@ -8,16 +8,41 @@
 // Thanks to the minimum `maxSize`, only numbers or strings might be too big
 // when used as a top-level value.
 export const truncateTopValue = function (value, maxSize) {
-  const valueString = JSON.stringify(value)
   return typeof value === 'number'
-    ? truncateNumber(valueString, maxSize)
-    : truncateString(valueString, maxSize)
+    ? truncateNumber(value, maxSize)
+    : truncateString(value, maxSize)
 }
 
-const truncateNumber = function (valueString, maxSize) {
-  return valueString
+const truncateNumber = function (value, maxSize) {
+  const valueString = truncateNumberPrecision(
+    value,
+    'toPrecision',
+    maxSize,
+    maxSize,
+  )
+  return valueString === undefined
+    ? truncateNumberPrecision(value, 'toExponential', maxSize, maxSize)
+    : valueString
 }
 
-const truncateString = function (valueString, maxSize) {
+// eslint-disable-next-line max-params
+const truncateNumberPrecision = function (value, methodName, maxSize, size) {
+  const valueString = value[methodName](size)
+  const valueStringA = valueString.replace(TRIMMED_NUMBER_REGEXP, '$1')
+
+  if (valueStringA.length <= maxSize) {
+    return valueStringA
+  }
+
+  return size === 1
+    ? undefined
+    : truncateNumberPrecision(value, methodName, maxSize, size - 1)
+}
+
+// Trim trailing decimal zeros
+const TRIMMED_NUMBER_REGEXP = /\.?0*($|e)/iu
+
+const truncateString = function (value, maxSize) {
+  const valueString = JSON.stringify(value)
   return valueString
 }

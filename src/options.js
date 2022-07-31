@@ -34,5 +34,5 @@ const checkMaxSizeType = function (maxSize) {
 // Allows any top-level value:
 //  - null, true or false
 //  - {} or []
-//  - "a..." or 1e-300 (after maximum truncation)
-export const MIN_MAX_SIZE = 6
+//  - "a..." or -1e-300 (after maximum truncation)
+export const MIN_MAX_SIZE = 7

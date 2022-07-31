@@ -8,11 +8,11 @@ const bigString = 'a'.repeat(bigStringLength)
 each(
   [
     {
-      input: { one: bigString, prop: true },
-      output: { prop: true },
+      input: { one: bigString, prop: false },
+      output: { prop: false },
       path: ['one'],
     },
-    { input: [bigString, true], output: [true], path: [0] },
+    { input: [bigString, false], output: [false], path: [0] },
   ],
   ({ title }, { input, output, path }) => {
     test(`Omitted values are filtered and do not count towards maxSize | ${title}`, (t) => {

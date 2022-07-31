@@ -41,15 +41,18 @@ each(
   },
 )
 
-// eslint-disable-next-line unicorn/no-null
-each([{}, [], true, false, null, 0, ''], ({ title }, input) => {
-  test(`Some top-level values are never truncated | ${title}`, (t) => {
-    t.deepEqual(truncateToSize(input, MIN_MAX_SIZE), {
-      output: input,
-      omittedProps: [],
+each(
+  // eslint-disable-next-line unicorn/no-null
+  [{}, [], true, false, null, 0, -Number.MIN_VALUE, ''],
+  ({ title }, input) => {
+    test(`Some top-level values are never truncated | ${title}`, (t) => {
+      t.deepEqual(truncateToSize(input, MIN_MAX_SIZE), {
+        output: input,
+        omittedProps: [],
+      })
     })
-  })
-})
+  },
+)
 
 each(
   [
