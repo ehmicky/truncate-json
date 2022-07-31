@@ -37,12 +37,12 @@ each(
 each(
   [
     {
-      input: { one: { two: { three: true, four: true } } },
+      input: { one: { two: { three: true, four: 0 } } },
       output: { one: { two: { three: true } } },
       path: ['one', 'two', 'four'],
     },
     {
-      input: { one: { four: true, two: { three: true, four: true } } },
+      input: { one: { four: true, two: { three: true, four: 0 } } },
       output: { one: { four: true, two: { three: true } } },
       path: ['one', 'two', 'four'],
     },
@@ -51,7 +51,7 @@ each(
     test(`Truncates in a depth-first manner | ${title}`, (t) => {
       t.deepEqual(truncateToOutput(input, output), {
         output,
-        omittedProps: [{ path, value: true }],
+        omittedProps: [{ path, value: 0 }],
       })
     })
   },
