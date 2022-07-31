@@ -1,7 +1,50 @@
-// Retrieve a string's byte length
-export const stringByteLength = function (string) {
-  return stringToBytes(string).length
+// This is the fastest method since it uses C++ (v8::String::Utf8Length())
+// However, it is only available in Node.js.
+// Faster than `Buffer.from(string).length`.
+const getNodeByteLength = function (string) {
+  // We do not import 'buffer' so it works in browsers
+  // eslint-disable-next-line n/prefer-global/buffer
+  return globalThis.Buffer.byteLength(string)
 }
+
+// This is:
+//  - Available on any platform unlike:
+//     - `new Blob([string]).size`
+//     - `new TextEncoder().encode(string).length`
+//  - Faster than any of the above, and also than any methods relying on
+//    `encodeURI()` or `encodeURIComponent()`
+// TODO: ensure invalid surrogate pairs have same size as the way they would
+// be serialized.
+// Uses imperative code for performance
+/* eslint-disable complexity, max-statements, fp/no-let, fp/no-loops, max-depth,
+   fp/no-mutation, no-magic-numbers */
+const getStringByteLength = function (string) {
+  const charLength = string.length
+  let byteLength = 0
+
+  for (let charIndex = 0; charIndex < charLength; charIndex += 1) {
+    const codepoint = string.codePointAt(charIndex)
+
+    if (codepoint < 0x80) {
+      byteLength += 1
+    } else if (codepoint < 0x8_00) {
+      byteLength += 2
+    } else if (codepoint < 0x1_00_00) {
+      byteLength += 3
+    } else {
+      byteLength += 4
+      charIndex += 1
+    }
+  }
+
+  return byteLength
+}
+/* eslint-enable complexity, max-statements, fp/no-let, fp/no-loops, max-depth,
+   fp/no-mutation, no-magic-numbers */
+
+// Retrieve a string's byte length
+export const stringByteLength =
+  'Buffer' in globalThis ? getNodeByteLength : getStringByteLength
 
 // Like `string.slice(start, end)` but bytewise (UTF-8).
 export const stringByteSlice = function (string, start, end) {
