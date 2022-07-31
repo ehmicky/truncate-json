@@ -22,6 +22,8 @@ const parseJson = function (jsonString) {
   try {
     return JSON.parse(jsonString)
   } catch (error) {
-    throw new Error(`Invalid JSON string: "${jsonString}"\n${error.message}`)
+    throw new TypeError(
+      `Invalid JSON string: "${jsonString}"\n${error.message}`,
+    )
   }
 }
