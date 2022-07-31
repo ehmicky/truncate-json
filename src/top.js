@@ -1,4 +1,4 @@
-import { stringByteSlice } from './length.js'
+import { stringByteSlice } from './byte.js'
 
 // Truncate a top-level value.
 // Unlike object properties and array items, top-level values are truncated
