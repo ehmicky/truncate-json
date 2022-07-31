@@ -1,7 +1,14 @@
 import test from 'ava'
 import { each } from 'test-each'
 
-import { truncateMinimum, truncateToOutput } from './helpers/main.js'
+// eslint-disable-next-line no-restricted-imports
+import { MIN_MAX_SIZE } from '../src/options.js'
+
+import {
+  truncateMinimum,
+  truncateToOutput,
+  truncateToSize,
+} from './helpers/main.js'
 import { STRINGS } from './helpers/strings.js'
 
 each(
@@ -33,6 +40,16 @@ each(
     })
   },
 )
+
+// eslint-disable-next-line unicorn/no-null
+each([{}, [], true, false, null, 0, ''], ({ title }, input) => {
+  test(`Some top-level values are never truncated | ${title}`, (t) => {
+    t.deepEqual(truncateToSize(input, MIN_MAX_SIZE), {
+      output: input,
+      omittedProps: [],
+    })
+  })
+})
 
 each(
   [
