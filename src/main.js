@@ -1,19 +1,20 @@
 import { validateOptions } from './options.js'
+import { truncateTopValue } from './top.js'
 import { truncateValue } from './value.js'
 
 // Truncate a JSON string
 export default function truncateJson(jsonString, maxSize) {
   validateOptions(jsonString, maxSize)
   const value = parseJson(jsonString)
-  const { value: valueA, omittedProps } = truncateValue({
+  const { value: newValue, omittedProps } = truncateValue({
     value,
     omittedProps: [],
     path: [],
     size: 0,
     maxSize,
   })
-  const jsonStringA = JSON.stringify(valueA)
-  return { jsonString: jsonStringA, omittedProps }
+  const newJsonString = serializeJson(newValue, value, maxSize)
+  return { jsonString: newJsonString, omittedProps }
 }
 
 const parseJson = function (jsonString) {
@@ -24,4 +25,10 @@ const parseJson = function (jsonString) {
       `Invalid JSON string: "${jsonString}"\n${error.message}`,
     )
   }
+}
+
+const serializeJson = function (newValue, value, maxSize) {
+  return newValue === undefined
+    ? truncateTopValue(value, maxSize)
+    : JSON.stringify(newValue)
 }
