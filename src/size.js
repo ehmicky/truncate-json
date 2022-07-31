@@ -45,6 +45,11 @@ export const getObjectPropSize = function (key, empty) {
 // property keys) to take into account escaping, including:
 //  - Control characters and Unicode characters
 //  - Invalid Unicode sequences
+// We use `TextEncoder()` to compute the UTF-8 byte length, not the character
+// length like `string.length`.
 const getJsonLength = function (value) {
-  return JSON.stringify(value).length
+  const jsonString = JSON.stringify(value)
+  return textEncoder.encode(jsonString).length
 }
+
+const textEncoder = new TextEncoder()

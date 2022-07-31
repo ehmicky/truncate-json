@@ -43,6 +43,12 @@ const truncateNumberPrecision = function (value, methodName, maxSize, size) {
 const TRIMMED_NUMBER_REGEXP = /\.?0*($|e)/iu
 
 const truncateString = function (value, maxSize) {
-  const valueString = JSON.stringify(value)
-  return valueString
+  const valueString = JSON.stringify(value).slice(
+    QUOTE.length,
+    maxSize - ELLIPSIS.length - QUOTE.length,
+  )
+  return `${QUOTE}${valueString}${ELLIPSIS}${QUOTE}`
 }
+
+const QUOTE = '"'
+const ELLIPSIS = '...'
