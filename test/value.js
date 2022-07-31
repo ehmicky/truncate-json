@@ -24,14 +24,15 @@ each(
   ],
   ({ title }, value) => {
     test(`Truncate values | ${title}`, (t) => {
-      const jsonString = JSON.stringify({ value })
-      const size = jsonString.length
-      t.deepEqual(truncateJson(jsonString, size), {
-        jsonString,
+      const inputString = JSON.stringify({ value })
+      const outputString = JSON.stringify({})
+      const size = inputString.length
+      t.deepEqual(truncateJson(inputString, size), {
+        jsonString: inputString,
         omittedProps: [],
       })
-      t.deepEqual(truncateJson(jsonString, size - 1), {
-        jsonString: JSON.stringify({}),
+      t.deepEqual(truncateJson(inputString, size - 1), {
+        jsonString: outputString,
         omittedProps: [{ path: ['value'], value }],
       })
     })
@@ -53,10 +54,10 @@ each(
   ],
   ({ title }, { input, output, path }) => {
     test(`Truncates in a depth-first manner | ${title}`, (t) => {
-      const jsonString = JSON.stringify(input)
+      const inputString = JSON.stringify(input)
       const outputString = JSON.stringify(output)
       const maxSize = outputString.length
-      t.deepEqual(truncateJson(jsonString, maxSize), {
+      t.deepEqual(truncateJson(inputString, maxSize), {
         jsonString: outputString,
         omittedProps: [{ path, value: true }],
       })
