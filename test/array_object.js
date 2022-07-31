@@ -1,6 +1,7 @@
 import test from 'ava'
 import { each } from 'test-each'
-import truncateJson from 'truncate-json'
+
+import { truncate } from './helpers/main.js'
 
 const bigStringMaxSize = 1e2
 const stringSize = 1e3
@@ -17,10 +18,8 @@ each(
   ],
   ({ title }, { input, output, path }) => {
     test(`Omitted values are filtered and do not count towards maxSize | ${title}`, (t) => {
-      const inputString = JSON.stringify(input)
-      const outputString = JSON.stringify(output)
-      t.deepEqual(truncateJson(inputString, bigStringMaxSize), {
-        jsonString: outputString,
+      t.deepEqual(truncate(input, bigStringMaxSize), {
+        output,
         omittedProps: [{ path, value: bigString }],
       })
     })
@@ -46,11 +45,9 @@ each(
   ],
   ({ title }, { input, output, path, value }) => {
     test(`Do not recurse on big fields | ${title}`, (t) => {
-      const inputString = JSON.stringify(input)
-      const outputString = JSON.stringify(output)
-      const maxSize = outputString.length
-      t.deepEqual(truncateJson(inputString, maxSize), {
-        jsonString: outputString,
+      const maxSize = JSON.stringify(output).length
+      t.deepEqual(truncate(input, maxSize), {
+        output,
         omittedProps: [{ path, value }],
       })
     })

@@ -1,7 +1,7 @@
 import test from 'ava'
 import { each } from 'test-each'
-import truncateJson from 'truncate-json'
 
+import { truncate } from './helpers/main.js'
 import { STRINGS } from './helpers/strings.js'
 
 each(
@@ -24,15 +24,15 @@ each(
   ],
   ({ title }, value) => {
     test(`Truncate values | ${title}`, (t) => {
-      const inputString = JSON.stringify({ value })
-      const outputString = JSON.stringify({})
-      const size = inputString.length
-      t.deepEqual(truncateJson(inputString, size), {
-        jsonString: inputString,
+      const input = { value }
+      const output = {}
+      const size = JSON.stringify(input).length
+      t.deepEqual(truncate(input, size), {
+        output: input,
         omittedProps: [],
       })
-      t.deepEqual(truncateJson(inputString, size - 1), {
-        jsonString: outputString,
+      t.deepEqual(truncate(input, size - 1), {
+        output,
         omittedProps: [{ path: ['value'], value }],
       })
     })
@@ -54,11 +54,9 @@ each(
   ],
   ({ title }, { input, output, path }) => {
     test(`Truncates in a depth-first manner | ${title}`, (t) => {
-      const inputString = JSON.stringify(input)
-      const outputString = JSON.stringify(output)
-      const maxSize = outputString.length
-      t.deepEqual(truncateJson(inputString, maxSize), {
-        jsonString: outputString,
+      const maxSize = JSON.stringify(output).length
+      t.deepEqual(truncate(input, maxSize), {
+        output,
         omittedProps: [{ path, value: true }],
       })
     })
