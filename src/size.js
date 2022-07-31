@@ -28,10 +28,6 @@ export const addSize = function ({
 
 // Compute the JSON size of a property value or top-level value
 export const getValueSize = function (value) {
-  if (value === undefined) {
-    return 0
-  }
-
   return typeof value === 'object' && value !== null ? 2 : getJsonLength(value)
 }
 
