@@ -5,7 +5,7 @@ import truncateJson from 'truncate-json'
 // eslint-disable-next-line no-magic-numbers
 each([undefined, '2', 2.5, -2, 0, 1], ({ title }, maxSize) => {
   test(`Validates maxSize | ${title}`, (t) => {
-    t.throws(truncateJson.bind(undefined, '{}', maxSize))
+    t.throws(truncateJson.bind(undefined, JSON.stringify({}), maxSize))
   })
 })
 

@@ -24,15 +24,15 @@ each(
   ],
   ({ title }, value) => {
     test(`Truncate values | ${title}`, (t) => {
-      const jsonString = JSON.stringify(value)
+      const jsonString = JSON.stringify({ value })
       const size = jsonString.length
       t.deepEqual(truncateJson(jsonString, size), {
         jsonString,
         omittedProps: [],
       })
       t.deepEqual(truncateJson(jsonString, size - 1), {
-        jsonString: undefined,
-        omittedProps: [{ path: [], value }],
+        jsonString: JSON.stringify({}),
+        omittedProps: [{ path: ['value'], value }],
       })
     })
   },
