@@ -14,15 +14,27 @@ export const getJsonLength = function (value) {
 // For those types, the character length is the same as the UTF-8 byte length
 const NO_STRING_JSON_TYPES = new Set(['null', 'number', 'boolean'])
 
+// Like `string.slice(start, end)` but bytewise (UTF-8).
+export const stringByteSlice = function (string, start, end) {
+  const bytes = stringToBytes(string)
+  const truncatedBytes = bytes.slice(start, end)
+  const truncatedString = bytesToString(truncatedBytes)
+  return truncatedString.replace(INVALID_END_CHARS, '')
+}
+
+// The truncation might happen in the middle of a multibyte Unicode sequence,
+// which is then replaced by \ufffd by TextDecoder. We trim it.
+const INVALID_END_CHARS = /\uFFFD$/u
+
 // Turn a string into a UTF-8 bytes array
-export const stringToBytes = function (string) {
+const stringToBytes = function (string) {
   return textEncoder.encode(string)
 }
 
 const textEncoder = new TextEncoder()
 
 // Inverse
-export const bytesToString = function (bytes) {
+const bytesToString = function (bytes) {
   return textDecoder.decode(bytes)
 }
 
