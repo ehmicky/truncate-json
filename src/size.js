@@ -42,7 +42,7 @@ export const getArrayItemSize = function (empty) {
 
 // Compute the JSON size of an object property key
 export const getObjectPropSize = function (key, empty) {
-  return typeof key === 'symbol' ? 0 : getJsonLength(key) + (empty ? 1 : 2)
+  return getJsonLength(key) + (empty ? 1 : 2)
 }
 
 // We use `JSON.stringify()` to compute the length of strings (including
