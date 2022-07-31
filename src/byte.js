@@ -13,8 +13,6 @@ const getNodeByteLength = function (string) {
 //     - `new TextEncoder().encode(string).length`
 //  - Faster than any of the above, and also than any methods relying on
 //    `encodeURI()` or `encodeURIComponent()`
-// TODO: ensure invalid surrogate pairs have same size as the way they would
-// be serialized.
 // Uses imperative code for performance
 /* eslint-disable complexity, max-statements, fp/no-let, fp/no-loops, max-depth,
    fp/no-mutation, no-magic-numbers */
@@ -45,6 +43,47 @@ const getStringByteLength = function (string) {
 // Retrieve a string's byte length
 export const stringByteLength =
   'Buffer' in globalThis ? getNodeByteLength : getStringByteLength
+
+// const strings = [
+//   // Empty (0 bytes)
+//   '',
+//   ...[
+//     // ASCII (1 byte)
+//     '\0',
+//     '\u0001',
+//     '\b',
+//     '\t',
+//     '\n',
+//     'a',
+//     ' ',
+//     '\u007F',
+//     // Non-ASCII nor astral before U+0800 (2 bytes)
+//     '\u0080',
+//     '\u07FF',
+//     // Non-ASCII nor astral since U+0800 (3 bytes)
+//     '\u0800',
+//     '\uFFFF',
+//     // Astral characters (4 bytes)
+//     '\uD800\uDC00',
+//     '\uDBFF\uDFFF',
+//     '\u{10000}',
+//     '\u{1FFFF}',
+//     '\u{FFFFF}',
+//     // Invalid surrogate pairs (3 bytes)
+//     '\uD800',
+//     '\uDBFF',
+//     '\uDC00',
+//     '\uDFFF',
+//     '\uDC00\uD800',
+//   ].flatMap((string) => [string, `${string} `, ` ${string}`]),
+// ]
+
+// for (const string of strings) {
+//   console.log(
+//     getNodeByteLength(string),
+//     getNodeByteLength(string) === getStringByteLength(string),
+//   )
+// }
 
 // Like `string.slice(start, end)` but bytewise (UTF-8).
 export const stringByteSlice = function (string, start, end) {
