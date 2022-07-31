@@ -3,24 +3,17 @@ import { each } from 'test-each'
 
 import { truncate } from './helpers/main.js'
 
-const bigStringMaxSize = 1e2
-const stringSize = 1e3
-const bigString = 'a'.repeat(stringSize)
-
 each(
   [
-    {
-      input: { one: bigString, prop: true },
-      output: { prop: true },
-      path: ['one'],
-    },
-    { input: [bigString, true], output: [true], path: [0] },
+    { input: { one: true, prop: 0 }, output: { prop: 0 }, path: ['one'] },
+    { input: [true, 0], output: [0], path: [0] },
   ],
   ({ title }, { input, output, path }) => {
     test(`Omitted values are filtered and do not count towards maxSize | ${title}`, (t) => {
-      t.deepEqual(truncate(input, bigStringMaxSize), {
+      const maxSize = JSON.stringify(output).length
+      t.deepEqual(truncate(input, maxSize), {
         output,
-        omittedProps: [{ path, value: bigString }],
+        omittedProps: [{ path, value: true }],
       })
     })
   },
