@@ -10,7 +10,7 @@ export const recurseArray = function ({
   path,
   size,
   maxSize,
-  transformValue,
+  truncateValue,
 }) {
   const newArray = []
   // eslint-disable-next-line fp/no-let
@@ -29,7 +29,7 @@ export const recurseArray = function ({
       key: index,
       empty: state.empty,
       size: state.size,
-      transformValue,
+      truncateValue,
     })
 
     // eslint-disable-next-line max-depth

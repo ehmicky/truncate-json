@@ -2,9 +2,10 @@ import { recurseArray } from './array.js'
 import { recurseObject } from './object.js'
 import { addSize, getValueSize } from './size.js'
 
+// Truncate a JSON string
 export default function truncateJson(jsonString, maxSize) {
   const value = parseJson(jsonString)
-  const { value: valueA, omittedProps } = transformValue({
+  const { value: valueA, omittedProps } = truncateValue({
     value,
     omittedProps: [],
     path: [],
@@ -38,7 +39,7 @@ const parseJson = function (jsonString) {
 //     - This favors maximizing the number of fields within the allowed
 //       `maxSize`
 //  - This is easier to implement
-const transformValue = function ({ value, omittedProps, path, size, maxSize }) {
+const truncateValue = function ({ value, omittedProps, path, size, maxSize }) {
   const increment = getValueSize(value)
   const {
     size: sizeA,
@@ -75,7 +76,7 @@ const recurseValue = function ({ value, omittedProps, path, size, maxSize }) {
         path,
         size,
         maxSize,
-        transformValue,
+        truncateValue,
       })
     : recurseObject({
         object: value,
@@ -83,6 +84,6 @@ const recurseValue = function ({ value, omittedProps, path, size, maxSize }) {
         path,
         size,
         maxSize,
-        transformValue,
+        truncateValue,
       })
 }

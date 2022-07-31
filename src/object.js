@@ -13,7 +13,7 @@ export const recurseObject = function ({
   path,
   size,
   maxSize,
-  transformValue,
+  truncateValue,
 }) {
   const newObject = {}
   // eslint-disable-next-line fp/no-let
@@ -32,7 +32,7 @@ export const recurseObject = function ({
       key,
       empty: state.empty,
       size: state.size,
-      transformValue,
+      truncateValue,
     })
 
     // eslint-disable-next-line max-depth
