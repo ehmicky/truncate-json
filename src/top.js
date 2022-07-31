@@ -57,16 +57,12 @@ const truncateString = function (value, maxSize) {
   return `${QUOTE}${truncatedStringB}${ELLIPSIS}${QUOTE}`
 }
 
-// The truncation might happen either:
-//  - Right after the backslash of a backslash sequence, leaving a single
-//    backslash at the end
-//  - In the middle of a multibyte Unicode sequence, which is then replaced
-//    by \ufffd by TextDecoder
-// We trim both.
-const INVALID_END_CHARS = /\uFFFD|\\$/u
+// The truncation might happen in the middle of a multibyte Unicode sequence,
+// which is then replaced by \ufffd by TextDecoder. We trim it.
+const INVALID_END_CHARS = /\uFFFD$/u
 
-// The truncation might happen in the middle of a \u sequence, which is invalid
-// JSON. We trim it.
+// The truncation might happen in the middle of a backslash sequence, which is
+// invalid JSON. We trim it.
 const fixUnicodeSequenceEnd = function (truncatedString) {
   try {
     JSON.parse(`${QUOTE}${truncatedString}${QUOTE}`)
