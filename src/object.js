@@ -1,15 +1,10 @@
-import { transformProp } from './prop.js'
+import { truncateProp } from './prop.js'
 import { getObjectPropSize } from './size.js'
 
 // Recurse over object properties.
-// Omitted properties are completely ignored (as opposed to have a key but an
-// `undefined` value).
-// We iterate in `Reflect.ownKeys()` order, not in sorted keys order.
-//  - This is faster
-//  - This preserves the object properties order
 // Use imperative logic for performance reasons.
 /* eslint-disable fp/no-let, fp/no-loops, fp/no-mutation, max-depth */
-export const recurseObject = function ({
+export const truncateObject = function ({
   object,
   omittedProps,
   path,
@@ -24,7 +19,7 @@ export const recurseObject = function ({
   for (const key in object) {
     const increment = getObjectPropSize(key, state.empty)
 
-    state = transformProp({
+    state = truncateProp({
       parent: object,
       omittedProps: state.omittedProps,
       path,

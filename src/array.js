@@ -1,4 +1,4 @@
-import { transformProp } from './prop.js'
+import { truncateProp } from './prop.js'
 import { getArrayItemSize } from './size.js'
 
 // Recurse over array items.
@@ -7,7 +7,7 @@ import { getArrayItemSize } from './size.js'
 // Use imperative logic for performance reasons.
 /* eslint-disable fp/no-let, fp/no-loops, fp/no-mutation,
    fp/no-mutating-methods, max-depth */
-export const recurseArray = function ({
+export const truncateArray = function ({
   array,
   omittedProps,
   path,
@@ -21,7 +21,7 @@ export const recurseArray = function ({
   for (let index = 0; index < array.length; index += 1) {
     const increment = getArrayItemSize(state.empty)
 
-    state = transformProp({
+    state = truncateProp({
       parent: array,
       omittedProps: state.omittedProps,
       path,

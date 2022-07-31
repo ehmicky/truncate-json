@@ -1,7 +1,7 @@
 import { addSize } from './size.js'
 
-// Transform an object property or an array item
-export const transformProp = function ({
+// Truncate an object property or an array item
+export const truncateProp = function ({
   parent,
   omittedProps,
   path,
