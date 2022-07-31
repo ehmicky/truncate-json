@@ -10,7 +10,7 @@ export default function truncateJson(jsonString, maxSize) {
     size: 0,
     maxSize,
   })
-  const jsonStringA = JSON.serialize(valueA)
+  const jsonStringA = JSON.stringify(valueA)
   return { jsonString: jsonStringA, omittedProps }
 }
 
