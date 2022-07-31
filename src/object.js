@@ -18,7 +18,6 @@ export const recurseObject = function ({
   truncateValue,
 }) {
   const newObject = {}
-
   let state = { empty: true, size, omittedProps }
 
   // eslint-disable-next-line guard-for-in

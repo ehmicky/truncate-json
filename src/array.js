@@ -16,7 +16,6 @@ export const recurseArray = function ({
   truncateValue,
 }) {
   const newArray = []
-
   let state = { empty: true, size, omittedProps }
 
   for (let index = 0; index < array.length; index += 1) {
