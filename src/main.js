@@ -3,7 +3,7 @@ import { recurseObject } from './object.js'
 import { addSize, getValueSize } from './size.js'
 
 export default function truncateJson(jsonString, maxSize) {
-  const value = JSON.parse(jsonString)
+  const value = parseJson(jsonString)
   const { value: newValue, omittedProps } = transformValue({
     value,
     omittedProps: [],
@@ -13,6 +13,18 @@ export default function truncateJson(jsonString, maxSize) {
   })
   const jsonStringA = JSON.serialize(newValue)
   return { jsonString: jsonStringA, omittedProps }
+}
+
+const parseJson = function (jsonString) {
+  if (typeof jsonString !== 'string') {
+    throw new TypeError(`Input must be a JSON string: ${jsonString}`)
+  }
+
+  try {
+    return JSON.parse(jsonString)
+  } catch (error) {
+    throw new Error(`Invalid JSON string: "${jsonString}"\n${error.message}`)
+  }
 }
 
 // Recurse over plain objects and arrays.
