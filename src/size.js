@@ -20,9 +20,10 @@ export const addSize = function ({
   value,
 }) {
   const newSize = size + increment
-  return newSize > maxSize
-    ? { size, stop: true, omittedProps: [...omittedProps, { path, value }] }
-    : { size: newSize, stop: false, omittedProps }
+  const stop = newSize > maxSize
+  return stop
+    ? { size, stop, omittedProps: [...omittedProps, { path, value }] }
+    : { size: newSize, stop, omittedProps }
 }
 
 // Compute the JSON size of a property value or top-level value
