@@ -1,18 +1,48 @@
+// Retrieve the JSON length of a value, excluding its children.
+// eslint-disable-next-line max-statements, complexity
+export const getJsonLength = function (value) {
+  if (value === null) {
+    return NULL_LENGTH
+  }
+
+  if (value === true) {
+    return TRUE_LENGTH
+  }
+
+  if (value === false) {
+    return FALSE_LENGTH
+  }
+
+  const type = typeof value
+
+  if (type === 'object') {
+    return OBJ_ARR_LENGTH
+  }
+
+  if (type === 'number') {
+    return JSON.stringify(value).length
+  }
+
+  return getJsonStringLength(value)
+}
+
+const NULL_LENGTH = 4
+const TRUE_LENGTH = 4
+const FALSE_LENGTH = 5
+const OBJ_ARR_LENGTH = 2
+
 // We use `JSON.stringify()` to compute the length of strings (including
 // property keys) to take into account escaping, including:
 //  - Control characters and Unicode characters
 //  - Invalid Unicode sequences
-// We use `TextEncoder()` to compute the UTF-8 byte length, not the character
-// length like `string.length`.
-export const getJsonLength = function (value) {
-  const jsonString = JSON.stringify(value)
-  return NO_STRING_JSON_TYPES.has(typeof value)
-    ? jsonString.length
-    : stringToBytes(jsonString).length
+export const getJsonStringLength = function (string) {
+  return stringByteLength(JSON.stringify(string))
 }
 
-// For those types, the character length is the same as the UTF-8 byte length
-const NO_STRING_JSON_TYPES = new Set(['null', 'number', 'boolean'])
+// Retrieve a string's byte length
+const stringByteLength = function (string) {
+  return stringToBytes(string).length
+}
 
 // Like `string.slice(start, end)` but bytewise (UTF-8).
 export const stringByteSlice = function (string, start, end) {

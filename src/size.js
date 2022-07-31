@@ -1,4 +1,4 @@
-import { getJsonLength } from './length.js'
+import { getJsonLength, getJsonStringLength } from './length.js'
 
 // Apply `maxSize`, which omits values if they their JSON size would be too
 // high.
@@ -30,7 +30,7 @@ export const addSize = function ({
 
 // Compute the JSON size of a property value or top-level value
 export const getValueSize = function (value) {
-  return typeof value === 'object' && value !== null ? 2 : getJsonLength(value)
+  return getJsonLength(value)
 }
 
 // Compute the JSON size of an array comma
@@ -40,5 +40,5 @@ export const getArrayItemSize = function (empty) {
 
 // Compute the JSON size of an object property key
 export const getObjectPropSize = function (key, empty) {
-  return getJsonLength(key) + (empty ? 1 : 2)
+  return getJsonStringLength(key) + (empty ? 1 : 2)
 }
