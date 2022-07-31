@@ -28,7 +28,7 @@ export const transformProp = function ({
   })
 
   if (stop) {
-    return { empty, size, omittedProps: omittedPropsA }
+    return { empty, size: sizeA, omittedProps: omittedPropsA }
   }
 
   const {

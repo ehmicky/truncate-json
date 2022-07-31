@@ -53,7 +53,7 @@ const transformValue = function ({ value, omittedProps, path, size, maxSize }) {
     value,
   })
   return stop
-    ? { value: undefined, size, omittedProps: omittedPropsA }
+    ? { value: undefined, size: sizeA, omittedProps: omittedPropsA }
     : recurseValue({
         value,
         omittedProps: omittedPropsA,
