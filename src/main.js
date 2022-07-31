@@ -1,7 +1,9 @@
+import { validateOptions } from './options.js'
 import { truncateValue } from './value.js'
 
 // Truncate a JSON string
 export default function truncateJson(jsonString, maxSize) {
+  validateOptions(maxSize)
   const value = parseJson(jsonString)
   const { value: valueA, omittedProps } = truncateValue({
     value,
@@ -27,17 +29,3 @@ const parseJson = function (jsonString) {
     )
   }
 }
-
-// const maxSize = 19
-// const value = { a: 1, b: 2, c: { d: 3, e: 4 } }
-// const valueString = JSON.stringify(value)
-// const size = valueString.length
-// const { jsonString: truncatedValueString, omittedProps } = truncateJson(
-//   valueString,
-//   maxSize,
-// )
-// const realTruncatedSize = truncatedValueString.length
-// console.log(maxSize)
-// console.log(valueString, size)
-// console.log(truncatedValueString, realTruncatedSize)
-// console.log(omittedProps)
