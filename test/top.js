@@ -17,19 +17,6 @@ each(
     { inputString: String(Number.MIN_SAFE_INTEGER), outputString: '-9e15' },
     { inputString: String(Number.MAX_SAFE_INTEGER), outputString: '9.01e15' },
     { inputString: String(-Number.MAX_VALUE), outputString: '-2e308' },
-  ],
-  ({ title }, { inputString, outputString }) => {
-    test(`Truncate top-level numbers | ${title}`, (t) => {
-      t.deepEqual(truncateJson(inputString, MIN_MAX_SIZE), {
-        jsonString: outputString,
-        truncatedProps: [{ path: [], value: JSON.parse(inputString) }],
-      })
-    })
-  },
-)
-
-each(
-  [
     { inputString: '"123456"', outputString: '"12..."' },
     { inputString: '"\u5555123"', outputString: '"..."' },
     { inputString: '"\u55551234"', outputString: '"\u5555..."', shift: 1 },
@@ -43,7 +30,7 @@ each(
     { inputString: '"\\u000012345"', outputString: '"\\u00001..."', shift: 5 },
   ],
   ({ title }, { inputString, outputString, shift = 0 }) => {
-    test(`Truncate top-level strings | ${title}`, (t) => {
+    test(`Truncate top-level values | ${title}`, (t) => {
       t.deepEqual(truncateJson(inputString, MIN_MAX_SIZE + shift), {
         jsonString: outputString,
         truncatedProps: [{ path: [], value: JSON.parse(inputString) }],
@@ -54,13 +41,16 @@ each(
 
 each(
   [
+    { inputString: '1234567' },
+    { inputString: '0.12345' },
+    { inputString: '0.00001' },
     { inputString: '"12345"' },
     { inputString: '"\u555512"' },
     { inputString: '"1\\n23"' },
     { inputString: '"\\u0000"', shift: 1 },
   ],
   ({ title }, { inputString, shift = 0 }) => {
-    test(`Does not truncate all top-level strings | ${title}`, (t) => {
+    test(`Does not truncate all top-level values | ${title}`, (t) => {
       t.deepEqual(truncateJson(inputString, MIN_MAX_SIZE + shift), {
         jsonString: inputString,
         truncatedProps: [],
