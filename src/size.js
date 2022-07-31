@@ -1,3 +1,5 @@
+import { getJsonLength } from './length.js'
+
 // Apply `maxSize`, which omits values if they their JSON size would be too
 // high.
 // Strings that are too long are completely omitted instead of being truncated:
@@ -40,16 +42,3 @@ export const getArrayItemSize = function (empty) {
 export const getObjectPropSize = function (key, empty) {
   return getJsonLength(key) + (empty ? 1 : 2)
 }
-
-// We use `JSON.stringify()` to compute the length of strings (including
-// property keys) to take into account escaping, including:
-//  - Control characters and Unicode characters
-//  - Invalid Unicode sequences
-// We use `TextEncoder()` to compute the UTF-8 byte length, not the character
-// length like `string.length`.
-const getJsonLength = function (value) {
-  const jsonString = JSON.stringify(value)
-  return textEncoder.encode(jsonString).length
-}
-
-const textEncoder = new TextEncoder()

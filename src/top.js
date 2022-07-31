@@ -1,3 +1,5 @@
+import { stringToBytes, bytesToString } from './length.js'
+
 // Truncate a top-level value.
 // Unlike object properties and array items, top-level values are truncated
 // instead of being omitted.
@@ -43,11 +45,35 @@ const truncateNumberPrecision = function (value, methodName, maxSize, size) {
 const TRIMMED_NUMBER_REGEXP = /\.?0*($|e)/iu
 
 const truncateString = function (value, maxSize) {
-  const valueString = JSON.stringify(value).slice(
+  const jsonString = JSON.stringify(value)
+  const bytes = stringToBytes(jsonString)
+  const truncatedBytes = bytes.slice(
     QUOTE.length,
     maxSize - ELLIPSIS.length - QUOTE.length,
   )
-  return `${QUOTE}${valueString}${ELLIPSIS}${QUOTE}`
+  const truncatedString = bytesToString(truncatedBytes)
+  const truncatedStringA = truncatedString.replace(INVALID_END_CHARS, '')
+  const truncatedStringB = fixUnicodeSequenceEnd(truncatedStringA)
+  return `${QUOTE}${truncatedStringB}${ELLIPSIS}${QUOTE}`
+}
+
+// The truncation might happen either:
+//  - Right after the backslash of a backslash sequence, leaving a single
+//    backslash at the end
+//  - In the middle of a multibyte Unicode sequence, which is then replaced
+//    by \ufffd by TextDecoder
+// We trim both.
+const INVALID_END_CHARS = /\uFFFD|\\$/u
+
+// The truncation might happen in the middle of a \u sequence, which is invalid
+// JSON. We trim it.
+const fixUnicodeSequenceEnd = function (truncatedString) {
+  try {
+    JSON.parse(`${QUOTE}${truncatedString}${QUOTE}`)
+    return truncatedString
+  } catch {
+    return fixUnicodeSequenceEnd(truncatedString.slice(0, -1))
+  }
 }
 
 const QUOTE = '"'
