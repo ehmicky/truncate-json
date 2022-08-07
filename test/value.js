@@ -4,6 +4,7 @@ import { each } from 'test-each'
 // eslint-disable-next-line no-restricted-imports
 import { MIN_MAX_SIZE } from '../src/options.js'
 
+import { INDENTS } from './helpers/indent.js'
 import {
   truncateMinimum,
   truncateToOutput,
@@ -12,6 +13,7 @@ import {
 import { STRINGS } from './helpers/strings.js'
 
 each(
+  INDENTS,
   [
     {},
     [],
@@ -29,11 +31,11 @@ each(
     1e-60,
     ...STRINGS,
   ],
-  ({ title }, value) => {
+  ({ title }, indent, value) => {
     test(`Truncate values | ${title}`, (t) => {
       const input = { value }
       const output = {}
-      t.deepEqual(truncateMinimum(input), [
+      t.deepEqual(truncateMinimum(input, indent), [
         { output: input, truncatedProps: [] },
         { output, truncatedProps: [{ path: ['value'], value }] },
       ])
@@ -55,6 +57,7 @@ each(
 )
 
 each(
+  INDENTS,
   [
     {
       input: { one: { two: { three: true, four: 0 } } },
@@ -67,9 +70,9 @@ each(
       path: ['one', 'two', 'four'],
     },
   ],
-  ({ title }, { input, output, path }) => {
+  ({ title }, indent, { input, output, path }) => {
     test(`Truncates in a depth-first manner | ${title}`, (t) => {
-      t.deepEqual(truncateToOutput(input, output), {
+      t.deepEqual(truncateToOutput(input, output, indent), {
         output,
         truncatedProps: [{ path, value: 0 }],
       })
