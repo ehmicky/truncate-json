@@ -48,6 +48,8 @@ Object with the following properties.
   is valid JSON
 - [`safe-json-value`](https://github.com/ehmicky/safe-json-value): ⛑️ JSON
   serialization should never fail
+- [`guess-json-indent`](https://github.com/ehmicky/guess-json-indent): Guess the
+  indentation of a JSON string
 - [`string-byte-length`](https://github.com/ehmicky/string-byte-length): Get the
   UTF-8 byte length of a string
 - [`string-byte-slice`](https://github.com/ehmicky/string-byte-slice): Like
