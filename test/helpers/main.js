@@ -1,3 +1,4 @@
+import stringByteLength from 'string-byte-length'
 import truncateJson from 'truncate-json'
 
 // Call main function twice: once with exact right `maxSize` and once with 1
@@ -23,7 +24,5 @@ export const truncateToSize = function (input, maxSize) {
 
 const getJsonLength = function (value) {
   const jsonString = JSON.stringify(value)
-  return textEncoder.encode(jsonString).length
+  return stringByteLength(jsonString)
 }
-
-const textEncoder = new TextEncoder()
