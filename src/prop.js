@@ -1,7 +1,6 @@
 import { addSize } from './size.js'
 
 // Truncate an object property or an array item
-// eslint-disable-next-line max-lines-per-function
 export const truncateProp = function ({
   parent,
   truncatedProps,
@@ -18,7 +17,7 @@ export const truncateProp = function ({
   const value = parent[key]
   const pathA = [...path, key]
   const {
-    size: sizeA,
+    size: newSize,
     stop,
     truncatedProps: truncatedPropsA,
   } = addSize({
@@ -30,19 +29,43 @@ export const truncateProp = function ({
     value,
   })
 
-  if (stop) {
-    return { empty, size: sizeA, truncatedProps: truncatedPropsA }
-  }
+  return stop
+    ? { empty, size: newSize, truncatedProps: truncatedPropsA }
+    : truncatePropValue({
+        value,
+        truncatedProps,
+        path: pathA,
+        maxSize,
+        empty,
+        size,
+        newSize,
+        truncateValue,
+        indent,
+        depth,
+      })
+}
 
+const truncatePropValue = function ({
+  value,
+  truncatedProps,
+  path,
+  maxSize,
+  empty,
+  size,
+  newSize,
+  truncateValue,
+  indent,
+  depth,
+}) {
   const {
     value: valueA,
-    size: sizeB,
+    size: newSizeA,
     truncatedProps: truncatedPropsB,
   } = truncateValue({
     value,
     truncatedProps,
-    path: pathA,
-    size: sizeA,
+    path,
+    size: newSize,
     maxSize,
     indent,
     depth: depth + 1,
@@ -51,7 +74,7 @@ export const truncateProp = function ({
     ? { empty, size, truncatedProps: truncatedPropsB }
     : {
         empty: false,
-        size: sizeB,
+        size: newSizeA,
         value: valueA,
         truncatedProps: truncatedPropsB,
       }
