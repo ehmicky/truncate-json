@@ -1,3 +1,19 @@
+type JSONValue =
+  | null
+  | boolean
+  | number
+  | string
+  | JSONValue[]
+  | { [key: string]: JSONValue }
+
+/**
+ *
+ */
+export interface TruncatedProp {
+  path: Array<string | number>
+  value: JSONValue
+}
+
 /**
  *
  * @example
@@ -7,4 +23,7 @@
 export default function truncateJson(
   jsonString: string,
   maxSize: number,
-): string
+): {
+  jsonString: string
+  truncatedProps: TruncatedProp[]
+}
