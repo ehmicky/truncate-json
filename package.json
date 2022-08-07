@@ -47,7 +47,7 @@
   },
   "dependencies": {
     "string-byte-length": "^1.2.0",
-    "string-byte-slice": "^1.1.0"
+    "string-byte-slice": "^1.2.0"
   },
   "devDependencies": {
     "@ehmicky/dev-tasks": "^1.0.84",
