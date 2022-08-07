@@ -1,4 +1,4 @@
-import { stringByteSlice } from './byte.js'
+import stringByteSlice from 'string-byte-slice'
 
 // Truncate a top-level string
 export const truncateString = function (value, maxSize) {
