@@ -44,6 +44,11 @@ Object with the following properties.
 
 # Related projects
 
+- [`string-byte-length`](https://github.com/ehmicky/string-byte-length): Get the
+  UTF-8 byte length of a string.
+- [`string-byte-slice`](https://github.com/ehmicky/string-byte-slice): Like
+  `string.slice()` but bytewise.
+
 # Support
 
 For any question, _don't hesitate_ to [submit an issue on GitHub](../../issues).
