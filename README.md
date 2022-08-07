@@ -39,6 +39,8 @@ console.log(returnValue.truncatedProps)
 //   { path: [ 1, 'b', 'd' ], value: 'four' },
 //   { path: [ 2 ], value: 'five' }
 // ]
+const isTruncated = returnValue.truncatedProps.length !== 0
+console.log(isTruncated) // true
 ```
 
 ```js

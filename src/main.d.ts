@@ -60,6 +60,8 @@ export interface TruncatedProp {
  * //   { path: [ 1, 'b', 'd' ], value: 'four' },
  * //   { path: [ 2 ], value: 'five' }
  * // ]
+ * const isTruncated = returnValue.truncatedProps.length !== 0
+ * console.log(isTruncated) // true
  *
  * // Indentation is automatically detected and preserved
  * const jsonString = JSON.stringify({ a: 'one', b: 'two' }, undefined, 2)
