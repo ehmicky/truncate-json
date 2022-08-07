@@ -44,10 +44,14 @@ Object with the following properties.
 
 # Related projects
 
+- [`is-json-value`](https://github.com/ehmicky/is-json-value): Check if a value
+  is valid JSON
+- [`safe-json-value`](https://github.com/ehmicky/safe-json-value): ⛑️ JSON
+  serialization should never fail
 - [`string-byte-length`](https://github.com/ehmicky/string-byte-length): Get the
-  UTF-8 byte length of a string.
+  UTF-8 byte length of a string
 - [`string-byte-slice`](https://github.com/ehmicky/string-byte-slice): Like
-  `string.slice()` but bytewise.
+  `string.slice()` but bytewise
 
 # Support
 
