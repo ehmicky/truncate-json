@@ -7,9 +7,6 @@ import { getJsonLength, getJsonStringLength } from './length.js'
 //    serialized value
 //  - This allows checking for strings being too large with `=== undefined`
 //    instead of inspecting the `truncatedProps`
-// The top-level value itself might become `undefined` if either:
-//  - The `maxSize` option is very low (which is unlikely)
-//  - The top-level value is a very long string
 // This is applied incrementally, in a depth-first manner, so that omitted
 // fields (due to being over `maxSize`) and their children are not processed
 // at all, for performance reason.

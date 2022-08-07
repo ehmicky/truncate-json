@@ -6,14 +6,60 @@
 
 Truncate a JSON string.
 
-Work in progress!
-
-# Features
-
-# Example
+# Examples
 
 ```js
 import truncateJson from 'truncate-json'
+
+// Object properties and array items beyond `maxSize` are omitted.
+const maxSize = 15
+const jsonString = JSON.stringify({ a: 'one', b: 'two' })
+console.log(jsonString)
+// '{"a":"one","b":"two"}' (21 bytes)
+console.log(truncateJson(jsonString, maxSize).jsonString)
+// '{"a":"one"}' (11 bytes)
+```
+
+```js
+// Works deeply inside objects and arrays
+const jsonString = JSON.stringify([
+  'one',
+  { a: 'two', b: { c: 'three', d: 'four' } },
+  'five',
+])
+console.log(jsonString)
+// '["one",{"a":"two","b":{"c":"three","d":"four"}},"five"]' (55 bytes)
+const returnValue = truncateJson(jsonString, 40)
+console.log(returnValue.jsonString)
+// '["one",{"a":"two","b":{"c":"three"}}]' (37 bytes)
+
+// Omitted/truncated properties are returned
+console.log(returnValue.truncatedProps)
+// [
+//   { path: [ 1, 'b', 'd' ], value: 'four' },
+//   { path: [ 2 ], value: 'five' }
+// ]
+```
+
+```js
+// Indentation is automatically detected and preserved
+const jsonString = JSON.stringify({ a: 'one', b: 'two' }, undefined, 2)
+console.log(jsonString)
+// '{
+//   "a": "one",
+//   "b": "two"
+// }' (30 bytes)
+console.log(truncateJson(jsonString, 25).jsonString)
+// '{
+//   "a": "one"
+// }' (16 bytes)
+```
+
+```js
+// The top-level value can be any JSON type, not only objects or arrays
+const jsonString = JSON.stringify('This is an example top-level string')
+console.log(truncateJson(jsonString, 25).jsonString)
+// '"This is an example t..."' (25 bytes)
 ```
 
 # Install
@@ -28,19 +74,44 @@ not `require()`.
 
 # API
 
-## truncateJson(value, options?)
+## truncateJson(jsonString, maxSize)
 
-`value` `any`\
-`options` [`Options?`](#options)\
+`jsonString` `string`\
+`maxSize` `number`\
 _Return value_: [`object`](#return-value)
 
-### Options
+Truncates a JSON string to `maxSize` bytes.
 
-Object with the following properties.
+Any object property or array item beyond the `maxSize` limit is completely
+omitted. Strings are not truncated, except when at the top-level.
 
 ### Return value
 
-Object with the following properties.
+The return value is an object with the following properties.
+
+#### jsonString
+
+_Type_: `string`
+
+`jsonString` after truncation has been applied.
+
+#### truncatedProps
+
+_Type_: `object[]`
+
+List of properties having been truncated/omitted.
+
+##### truncatedProps[*].path
+
+_Type_: `Array<string | number>`
+
+Property path. This is an array of property keys and/or array indices.
+
+##### truncatedProps[*].value
+
+_Type_: `JsonValue`
+
+Property value.
 
 # Related projects
 
