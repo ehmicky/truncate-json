@@ -3,26 +3,29 @@ import truncateJson from 'truncate-json'
 
 // Call main function twice: once with exact right `maxSize` and once with 1
 // byte less
-export const truncateMinimum = function (input) {
-  const maxSize = getJsonLength(input)
-  return [truncateToSize(input, maxSize), truncateToSize(input, maxSize - 1)]
+export const truncateMinimum = function (input, indent) {
+  const maxSize = getJsonLength(input, indent)
+  return [
+    truncateToSize(input, maxSize, indent),
+    truncateToSize(input, maxSize - 1, indent),
+  ]
 }
 
 // Call main function to truncate an `input` towards the size of an `output`
-export const truncateToOutput = function (input, output) {
-  const maxSize = getJsonLength(output)
-  return truncateToSize(input, maxSize)
+export const truncateToOutput = function (input, output, indent) {
+  const maxSize = getJsonLength(output, indent)
+  return truncateToSize(input, maxSize, indent)
 }
 
 // Call main function to truncate an `input` towards a specific size
-export const truncateToSize = function (input, maxSize) {
-  const inputString = JSON.stringify(input)
+export const truncateToSize = function (input, maxSize, indent) {
+  const inputString = JSON.stringify(input, undefined, indent)
   const { jsonString, truncatedProps } = truncateJson(inputString, maxSize)
   const output = JSON.parse(jsonString)
   return { output, truncatedProps }
 }
 
-const getJsonLength = function (value) {
-  const jsonString = JSON.stringify(value)
+const getJsonLength = function (value, indent) {
+  const jsonString = JSON.stringify(value, undefined, indent)
   return stringByteLength(jsonString)
 }

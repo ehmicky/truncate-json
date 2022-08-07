@@ -1,11 +1,13 @@
 import test from 'ava'
 import { each } from 'test-each'
 
+import { INDENTS } from './helpers/indent.js'
 import { truncateToOutput } from './helpers/main.js'
 
 const bigStringLength = 1e3
 const bigString = 'a'.repeat(bigStringLength)
 each(
+  INDENTS,
   [
     {
       input: { one: bigString, prop: false },
@@ -14,9 +16,9 @@ each(
     },
     { input: [bigString, false], output: [false], path: [0] },
   ],
-  ({ title }, { input, output, path }) => {
+  ({ title }, indent, { input, output, path }) => {
     test(`Omitted values are filtered and do not count towards maxSize | ${title}`, (t) => {
-      t.deepEqual(truncateToOutput(input, output), {
+      t.deepEqual(truncateToOutput(input, output, indent), {
         output,
         truncatedProps: [{ path, value: bigString }],
       })
