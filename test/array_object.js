@@ -27,6 +27,7 @@ each(
 )
 
 each(
+  INDENTS,
   [
     {
       input: { one: { two: { three: true } } },
@@ -53,9 +54,9 @@ each(
       value: [true],
     },
   ],
-  ({ title }, { input, output, path, value }) => {
+  ({ title }, indent, { input, output, path, value }) => {
     test(`Do not recurse on big fields | ${title}`, (t) => {
-      t.deepEqual(truncateToOutput(input, output), {
+      t.deepEqual(truncateToOutput(input, output, indent), {
         output,
         truncatedProps: [{ path, value }],
       })
