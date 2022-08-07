@@ -9,6 +9,8 @@ export const truncateValue = function ({
   path,
   size,
   maxSize,
+  indent,
+  depth,
 }) {
   const increment = getValueSize(value)
   const {
@@ -31,6 +33,8 @@ export const truncateValue = function ({
         path,
         size: sizeA,
         maxSize,
+        indent,
+        depth,
       })
 }
 
@@ -43,7 +47,15 @@ export const truncateValue = function ({
 //    resulting in fewer `truncatedProps`
 //  - This favors maximizing the number of fields within the allowed `maxSize`
 //  - This is easier to implement
-const recurseValue = function ({ value, truncatedProps, path, size, maxSize }) {
+const recurseValue = function ({
+  value,
+  truncatedProps,
+  path,
+  size,
+  maxSize,
+  indent,
+  depth,
+}) {
   if (typeof value !== 'object' || value === null) {
     return { value, size, truncatedProps }
   }
@@ -56,6 +68,8 @@ const recurseValue = function ({ value, truncatedProps, path, size, maxSize }) {
         size,
         maxSize,
         truncateValue,
+        indent,
+        depth,
       })
     : truncateObject({
         object: value,
@@ -64,5 +78,7 @@ const recurseValue = function ({ value, truncatedProps, path, size, maxSize }) {
         size,
         maxSize,
         truncateValue,
+        indent,
+        depth,
       })
 }

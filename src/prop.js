@@ -1,6 +1,7 @@
 import { addSize } from './size.js'
 
 // Truncate an object property or an array item
+// eslint-disable-next-line max-lines-per-function
 export const truncateProp = function ({
   parent,
   truncatedProps,
@@ -11,6 +12,8 @@ export const truncateProp = function ({
   empty,
   size,
   truncateValue,
+  indent,
+  depth,
 }) {
   const value = parent[key]
   const pathA = [...path, key]
@@ -41,6 +44,8 @@ export const truncateProp = function ({
     path: pathA,
     size: sizeA,
     maxSize,
+    indent,
+    depth: depth + 1,
   })
   return valueA === undefined
     ? { empty, size, truncatedProps: truncatedPropsB }

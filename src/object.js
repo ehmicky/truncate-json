@@ -11,13 +11,20 @@ export const truncateObject = function ({
   size,
   maxSize,
   truncateValue,
+  indent,
+  depth,
 }) {
   const newObject = {}
   let state = { empty: true, size, truncatedProps }
 
   // eslint-disable-next-line guard-for-in
   for (const key in object) {
-    const increment = getObjectPropSize(key, state.empty)
+    const increment = getObjectPropSize({
+      key,
+      empty: state.empty,
+      indent,
+      depth,
+    })
 
     state = truncateProp({
       parent: object,
@@ -29,6 +36,8 @@ export const truncateObject = function ({
       empty: state.empty,
       size: state.size,
       truncateValue,
+      indent,
+      depth,
     })
 
     if (state.value !== undefined) {

@@ -14,12 +14,14 @@ export const truncateArray = function ({
   size,
   maxSize,
   truncateValue,
+  indent,
+  depth,
 }) {
   const newArray = []
   let state = { empty: true, size, truncatedProps }
 
   for (let index = 0; index < array.length; index += 1) {
-    const increment = getArrayItemSize(state.empty)
+    const increment = getArrayItemSize(state.empty, indent, depth)
 
     state = truncateProp({
       parent: array,
@@ -31,6 +33,8 @@ export const truncateArray = function ({
       empty: state.empty,
       size: state.size,
       truncateValue,
+      indent,
+      depth,
     })
 
     if (state.value !== undefined) {
