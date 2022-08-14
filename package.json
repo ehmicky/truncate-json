@@ -46,7 +46,7 @@
     "test": "test"
   },
   "dependencies": {
-    "guess-json-indent": "^1.1.0",
+    "guess-json-indent": "^1.2.0",
     "string-byte-length": "^1.2.0",
     "string-byte-slice": "^1.2.0"
   },
