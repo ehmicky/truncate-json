@@ -19,7 +19,6 @@ each(
     [],
     true,
     false,
-    // eslint-disable-next-line unicorn/no-null
     null,
     0,
     // eslint-disable-next-line no-magic-numbers
@@ -44,7 +43,6 @@ each(
 )
 
 each(
-  // eslint-disable-next-line unicorn/no-null
   [{}, [], true, false, null, 0, -Number.MIN_VALUE, ''],
   ({ title }, input) => {
     test(`Some top-level values are never truncated | ${title}`, (t) => {
