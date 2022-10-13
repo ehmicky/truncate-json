@@ -34,7 +34,7 @@
     "types",
     "typescript"
   ],
-  "license": "Apache-2.0",
+  "license": "MIT",
   "homepage": "https://www.github.com/ehmicky/truncate-json",
   "repository": "ehmicky/truncate-json",
   "bugs": {
