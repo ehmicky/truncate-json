@@ -51,7 +51,7 @@
     "string-byte-slice": "^1.4.1"
   },
   "devDependencies": {
-    "@ehmicky/dev-tasks": "^1.0.94",
+    "@ehmicky/dev-tasks": "^1.0.95",
     "test-each": "^5.4.1"
   },
   "engines": {
