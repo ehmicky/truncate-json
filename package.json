@@ -1,6 +1,6 @@
 {
   "name": "truncate-json",
-  "version": "1.3.1",
+  "version": "1.4.0",
   "type": "module",
   "exports": {
     "types": "./build/types/main.d.ts",
