@@ -5,7 +5,7 @@ import {
   expectNotAssignable,
 } from 'tsd'
 
-import truncateJson, { TruncatedProp } from './main.js'
+import truncateJson, { TruncatedProp } from 'truncate-json'
 
 const { jsonString, truncatedProps } = truncateJson('{}', 2)
 expectError(truncateJson({}))
