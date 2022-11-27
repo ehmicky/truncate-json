@@ -1,9 +1,6 @@
 import test from 'ava'
 import { each } from 'test-each'
 
-// eslint-disable-next-line no-restricted-imports
-import { MIN_MAX_SIZE } from '../src/options.js'
-
 import { INDENTS } from './helpers/indent.test.js'
 import {
   truncateMinimum,
@@ -11,6 +8,8 @@ import {
   truncateToSize,
 } from './helpers/main.test.js'
 import { STRINGS } from './helpers/strings.test.js'
+// eslint-disable-next-line no-restricted-imports
+import { MIN_MAX_SIZE } from './options.js'
 
 each(
   INDENTS,

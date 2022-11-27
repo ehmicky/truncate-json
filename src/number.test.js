@@ -3,7 +3,7 @@ import { each } from 'test-each'
 import truncateJson from 'truncate-json'
 
 // eslint-disable-next-line no-restricted-imports
-import { MIN_MAX_SIZE } from '../src/options.js'
+import { MIN_MAX_SIZE } from './options.js'
 
 each(
   [
