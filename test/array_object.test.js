@@ -1,8 +1,8 @@
 import test from 'ava'
 import { each } from 'test-each'
 
-import { INDENTS } from './helpers/indent.js'
-import { truncateToOutput } from './helpers/main.js'
+import { INDENTS } from './helpers/indent.test.js'
+import { truncateToOutput } from './helpers/main.test.js'
 
 const bigStringLength = 1e3
 const bigString = 'a'.repeat(bigStringLength)

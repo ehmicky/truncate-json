@@ -1,9 +1,9 @@
 import test from 'ava'
 import { each } from 'test-each'
 
-import { INDENTS } from './helpers/indent.js'
-import { truncateMinimum } from './helpers/main.js'
-import { STRINGS } from './helpers/strings.js'
+import { INDENTS } from './helpers/indent.test.js'
+import { truncateMinimum } from './helpers/main.test.js'
+import { STRINGS } from './helpers/strings.test.js'
 
 each(INDENTS, STRINGS, ({ title }, indent, key) => {
   test(`Truncate object properties | ${title}`, (t) => {

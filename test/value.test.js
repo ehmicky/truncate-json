@@ -4,13 +4,13 @@ import { each } from 'test-each'
 // eslint-disable-next-line no-restricted-imports
 import { MIN_MAX_SIZE } from '../src/options.js'
 
-import { INDENTS } from './helpers/indent.js'
+import { INDENTS } from './helpers/indent.test.js'
 import {
   truncateMinimum,
   truncateToOutput,
   truncateToSize,
-} from './helpers/main.js'
-import { STRINGS } from './helpers/strings.js'
+} from './helpers/main.test.js'
+import { STRINGS } from './helpers/strings.test.js'
 
 each(
   INDENTS,
