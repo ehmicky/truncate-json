@@ -1,4 +1,5 @@
 import stringByteLength from 'string-byte-length'
+
 import truncateJson from 'truncate-json'
 
 // Call main function twice: once with exact right `maxSize` and once with 1

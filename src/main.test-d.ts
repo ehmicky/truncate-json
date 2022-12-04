@@ -1,6 +1,6 @@
 import { expectType, expectAssignable, expectNotAssignable } from 'tsd'
 
-import truncateJson, { TruncatedProp } from 'truncate-json'
+import truncateJson, { type TruncatedProp } from 'truncate-json'
 
 const { jsonString, truncatedProps } = truncateJson('{}', 2)
 // @ts-expect-error
@@ -19,7 +19,7 @@ expectAssignable<TruncatedProp['path']>([])
 expectAssignable<TruncatedProp['path']>(['a'])
 expectAssignable<TruncatedProp['path']>([0])
 expectAssignable<TruncatedProp['path']>([0, 'a'])
-expectNotAssignable<TruncatedProp['path']>([Symbol()])
+expectNotAssignable<TruncatedProp['path']>([Symbol('test')])
 expectNotAssignable<TruncatedProp['path']>(undefined)
 
 expectAssignable<TruncatedProp['value']>(null)
