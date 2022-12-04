@@ -1,16 +1,14 @@
-import {
-  expectType,
-  expectError,
-  expectAssignable,
-  expectNotAssignable,
-} from 'tsd'
+import { expectType, expectAssignable, expectNotAssignable } from 'tsd'
 
 import truncateJson, { TruncatedProp } from 'truncate-json'
 
 const { jsonString, truncatedProps } = truncateJson('{}', 2)
-expectError(truncateJson({}))
-expectError(truncateJson({}, 2))
-expectError(truncateJson('{}', '2'))
+// @ts-expect-error
+truncateJson({})
+// @ts-expect-error
+truncateJson({}, 2)
+// @ts-expect-error
+truncateJson('{}', '2')
 
 expectType<string>(jsonString)
 
