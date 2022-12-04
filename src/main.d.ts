@@ -16,7 +16,7 @@ export interface TruncatedProp {
   /**
    * Property path. This is an array of property keys and/or array indices.
    */
-  path: Array<string | number>
+  path: (string | number)[]
 
   /**
    * Property value.
