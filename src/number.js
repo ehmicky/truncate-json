@@ -1,5 +1,5 @@
 // Truncate a top-level number
-export const truncateNumber = function (value, maxSize) {
+export const truncateNumber = (value, maxSize) => {
   const valueString = truncateNumberPrecision(
     value,
     'toPrecision',
@@ -12,7 +12,7 @@ export const truncateNumber = function (value, maxSize) {
 }
 
 // eslint-disable-next-line max-params
-const truncateNumberPrecision = function (value, methodName, maxSize, size) {
+const truncateNumberPrecision = (value, methodName, maxSize, size) => {
   const valueString = value[methodName](size)
   const valueStringA = valueString
     .replace(POSITIVE_EXPONENT, '$1')

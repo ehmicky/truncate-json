@@ -7,7 +7,7 @@ import { getArrayItemSize } from './size.js'
 // Use imperative logic for performance reasons.
 /* eslint-disable fp/no-let, fp/no-loops, fp/no-mutation,
    fp/no-mutating-methods, max-depth */
-export const truncateArray = function ({
+export const truncateArray = ({
   array,
   truncatedProps,
   path,
@@ -16,7 +16,7 @@ export const truncateArray = function ({
   truncateValue,
   indent,
   depth,
-}) {
+}) => {
   const newArray = []
   let state = { empty: true, size, truncatedProps }
 

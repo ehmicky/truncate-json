@@ -4,7 +4,7 @@ import { getObjectPropSize } from './size.js'
 // Recurse over object properties.
 // Use imperative logic for performance reasons.
 /* eslint-disable fp/no-let, fp/no-loops, fp/no-mutation, max-depth */
-export const truncateObject = function ({
+export const truncateObject = ({
   object,
   truncatedProps,
   path,
@@ -13,7 +13,7 @@ export const truncateObject = function ({
   truncateValue,
   indent,
   depth,
-}) {
+}) => {
   const newObject = {}
   let state = { empty: true, size, truncatedProps }
 

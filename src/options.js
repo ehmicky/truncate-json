@@ -1,5 +1,5 @@
 // Validate arguments and options
-export const validateOptions = function (jsonString, maxSize) {
+export const validateOptions = (jsonString, maxSize) => {
   if (typeof jsonString !== 'string') {
     throw new TypeError(`Input must be a JSON string: ${jsonString}`)
   }
@@ -7,7 +7,7 @@ export const validateOptions = function (jsonString, maxSize) {
   validateMaxSize(maxSize)
 }
 
-const validateMaxSize = function (maxSize) {
+const validateMaxSize = (maxSize) => {
   checkMaxSizeType(maxSize)
 
   if (maxSize < 0) {
@@ -21,7 +21,7 @@ const validateMaxSize = function (maxSize) {
   }
 }
 
-const checkMaxSizeType = function (maxSize) {
+const checkMaxSizeType = (maxSize) => {
   if (maxSize === undefined) {
     throw new TypeError('"maxSize" argument must be defined')
   }

@@ -2,7 +2,7 @@ import stringByteLength from 'string-byte-length'
 
 // Retrieve the JSON length of a value, excluding its children.
 // eslint-disable-next-line max-statements, complexity
-export const getJsonLength = function (value) {
+export const getJsonLength = (value) => {
   if (value === null) {
     return NULL_LENGTH
   }
@@ -37,6 +37,5 @@ const OBJ_ARR_LENGTH = 2
 // property keys) to take into account escaping, including:
 //  - Control characters and Unicode characters
 //  - Invalid Unicode sequences
-export const getJsonStringLength = function (string) {
-  return stringByteLength(JSON.stringify(string))
-}
+export const getJsonStringLength = (string) =>
+  stringByteLength(JSON.stringify(string))

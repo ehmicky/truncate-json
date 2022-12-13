@@ -1,7 +1,7 @@
 import { addSize } from './size.js'
 
 // Truncate an object property or an array item
-export const truncateProp = function ({
+export const truncateProp = ({
   parent,
   truncatedProps,
   path,
@@ -13,7 +13,7 @@ export const truncateProp = function ({
   truncateValue,
   indent,
   depth,
-}) {
+}) => {
   const value = parent[key]
   const pathA = [...path, key]
   const {
@@ -45,7 +45,7 @@ export const truncateProp = function ({
       })
 }
 
-const truncatePropValue = function ({
+const truncatePropValue = ({
   value,
   truncatedProps,
   path,
@@ -56,7 +56,7 @@ const truncatePropValue = function ({
   truncateValue,
   indent,
   depth,
-}) {
+}) => {
   const {
     value: valueA,
     size: newSizeA,

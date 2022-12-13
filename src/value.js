@@ -3,7 +3,7 @@ import { truncateObject } from './object.js'
 import { addSize, getValueSize } from './size.js'
 
 // Truncate a value to fit within a specific JSON size
-export const truncateValue = function ({
+export const truncateValue = ({
   value,
   truncatedProps,
   path,
@@ -11,7 +11,7 @@ export const truncateValue = function ({
   maxSize,
   indent,
   depth,
-}) {
+}) => {
   const increment = getValueSize(value)
   const {
     size: sizeA,
@@ -47,7 +47,7 @@ export const truncateValue = function ({
 //    resulting in fewer `truncatedProps`
 //  - This favors maximizing the number of fields within the allowed `maxSize`
 //  - This is easier to implement
-const recurseValue = function ({
+const recurseValue = ({
   value,
   truncatedProps,
   path,
@@ -55,7 +55,7 @@ const recurseValue = function ({
   maxSize,
   indent,
   depth,
-}) {
+}) => {
   if (typeof value !== 'object' || value === null) {
     return { value, size, truncatedProps }
   }

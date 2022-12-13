@@ -10,14 +10,14 @@ import { getJsonLength, getJsonStringLength } from './length.js'
 // This is applied incrementally, in a depth-first manner, so that omitted
 // fields (due to being over `maxSize`) and their children are not processed
 // at all, for performance reason.
-export const addSize = function ({
+export const addSize = ({
   size,
   increment,
   maxSize,
   truncatedProps,
   path,
   value,
-}) {
+}) => {
   const newSize = size + increment
   const stop = newSize > maxSize
   return stop
@@ -26,19 +26,17 @@ export const addSize = function ({
 }
 
 // Compute the JSON size of a property value or top-level value
-export const getValueSize = function (value) {
-  return getJsonLength(value)
-}
+export const getValueSize = (value) => getJsonLength(value)
 
 // Compute the JSON size of an array comma and whitespaces
-export const getArrayItemSize = function (empty, indent, depth) {
+export const getArrayItemSize = (empty, indent, depth) => {
   const indentSize = getIndentSize({ empty, indent, depth, keySpaceSize: 0 })
   const commaSize = getCommaSize(empty)
   return indentSize + commaSize
 }
 
 // Compute the JSON size of an object property key and whitespaces
-export const getObjectPropSize = function ({ key, empty, indent, depth }) {
+export const getObjectPropSize = ({ key, empty, indent, depth }) => {
   const indentSize = getIndentSize({ empty, indent, depth, keySpaceSize: 1 })
   const keySize = getJsonStringLength(key)
   const commaSize = getCommaSize(empty)
@@ -49,7 +47,7 @@ const COLON_SIZE = 1
 
 // Compute the size of indentation of the object property or array item.
 // If `empty`, also adds the size of the indentation of the parent {} or []
-const getIndentSize = function ({ empty, indent, depth, keySpaceSize }) {
+const getIndentSize = ({ empty, indent, depth, keySpaceSize }) => {
   if (indent === undefined) {
     return 0
   }
@@ -62,8 +60,6 @@ const getIndentSize = function ({ empty, indent, depth, keySpaceSize }) {
 const NEWLINE_SIZE = 1
 
 // Each object property or array item adds a comma, except the first one
-const getCommaSize = function (empty) {
-  return empty ? 0 : COMMA_SIZE
-}
+const getCommaSize = (empty) => (empty ? 0 : COMMA_SIZE)
 
 const COMMA_SIZE = 1

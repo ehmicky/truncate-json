@@ -6,7 +6,7 @@ import { truncateString } from './string.js'
 import { truncateValue } from './value.js'
 
 // Truncate a JSON string
-export default function truncateJson(jsonString, maxSize) {
+const truncateJson = (jsonString, maxSize) => {
   validateOptions(jsonString, maxSize)
   const indent = getIndent(jsonString)
   const value = parseJson(jsonString)
@@ -23,17 +23,19 @@ export default function truncateJson(jsonString, maxSize) {
   return { jsonString: newJsonString, truncatedProps }
 }
 
+export default truncateJson
+
 // Guesses the indentation to take it into account.
 // We do not provide an option for it, relying on detection only:
 //  - This results in a simpler API
 //  - This is good in most cases, and in the few cases where it is not, one can
 //    fix it by re-serializing the value first
-const getIndent = function (jsonString) {
+const getIndent = (jsonString) => {
   const indent = guessJsonIndent(jsonString)
   return typeof indent === 'string' ? indent.length : indent
 }
 
-const parseJson = function (jsonString) {
+const parseJson = (jsonString) => {
   try {
     return JSON.parse(jsonString)
   } catch (error) {
@@ -51,7 +53,7 @@ const parseJson = function (jsonString) {
 //  - As opposed to throwing if the top-level value is not an object or array
 // Thanks to the minimum `maxSize`, only numbers or strings might be too big
 // when used as a top-level value.
-const serializeJson = function ({ newValue, value, maxSize, indent }) {
+const serializeJson = ({ newValue, value, maxSize, indent }) => {
   if (newValue !== undefined) {
     return JSON.stringify(newValue, undefined, indent)
   }
