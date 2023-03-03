@@ -2,19 +2,21 @@
   "name": "truncate-json",
   "version": "1.5.0",
   "type": "module",
+  "source": "src/main.js",
   "exports": {
-    "types": "./build/src/main.d.ts",
-    "default": "./build/src/main.js"
+    "require": "./dist/main.cjs",
+    "default": "./dist/main.modern.js"
   },
-  "main": "./build/src/main.js",
-  "types": "./build/src/main.d.ts",
+  "main": "./dist/main.cjs",
+  "module": "./dist/main.module.js",
+  "unpkg": "./dist/main.umd.js",
+  "types": "./src/main.d.ts",
   "files": [
-    "build/src/**/*.{js,json,d.ts}",
-    "!build/src/**/*.test.js",
-    "!build/src/{helpers,fixtures}"
+    "dist"
   ],
   "sideEffects": false,
   "scripts": {
+    "bundle": "microbundle --target node --generateTypes false --external none",
     "test": "gulp test"
   },
   "description": "Truncate a JSON string",
@@ -57,6 +59,7 @@
   },
   "devDependencies": {
     "@ehmicky/dev-tasks": "^2.0.60",
+    "microbundle": "^0.15.1",
     "test-each": "^5.7.1"
   },
   "engines": {
