@@ -12,7 +12,8 @@
   "unpkg": "./dist/main.umd.js",
   "types": "./src/main.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "src/main.d.ts"
   ],
   "sideEffects": false,
   "scripts": {
