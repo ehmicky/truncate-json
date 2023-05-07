@@ -53,7 +53,7 @@
   "dependencies": {
     "guess-json-indent": "^2.0.0",
     "string-byte-length": "^2.0.0",
-    "string-byte-slice": "^1.6.0"
+    "string-byte-slice": "^2.0.0"
   },
   "devDependencies": {
     "@ehmicky/dev-tasks": "^2.0.80",
