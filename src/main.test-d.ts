@@ -1,6 +1,6 @@
+import truncateJson, { type TruncatedProp } from 'truncate-json'
 import { expectType, expectAssignable, expectNotAssignable } from 'tsd'
 
-import truncateJson, { type TruncatedProp } from 'truncate-json'
 
 const { jsonString, truncatedProps } = truncateJson('{}', 2)
 // @ts-expect-error
