@@ -4,7 +4,6 @@ import truncateJson from 'truncate-json'
 
 import { MIN_MAX_SIZE } from './options.js'
 
-
 each(
   [
     { inputString: '"123456"', outputString: '"12..."' },

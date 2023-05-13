@@ -4,7 +4,6 @@ import truncateJson from 'truncate-json'
 
 import { MIN_MAX_SIZE } from './options.js'
 
-
 // eslint-disable-next-line no-magic-numbers
 each([undefined, '2', 2.5, -2, 0, 5], ({ title }, maxSize) => {
   test(`Validates maxSize | ${title}`, (t) => {
