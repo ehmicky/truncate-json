@@ -42,7 +42,10 @@
   ],
   "license": "MIT",
   "homepage": "https://www.github.com/ehmicky/truncate-json",
-  "repository": "ehmicky/truncate-json",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ehmicky/truncate-json.git"
+  },
   "bugs": {
     "url": "https://github.com/ehmicky/truncate-json/issues"
   },
