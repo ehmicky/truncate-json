@@ -5,8 +5,7 @@ import { getArrayItemSize } from './size.js'
 // Omitted items are filtered out.
 //  - Otherwise, `JSON.stringify()` would transform them to `null`
 // Use imperative logic for performance reasons.
-/* eslint-disable fp/no-let, fp/no-loops, fp/no-mutation,
-   fp/no-mutating-methods, max-depth */
+/* eslint-disable fp/no-let, fp/no-loops, fp/no-mutation, max-depth */
 export const truncateArray = ({
   array,
   truncatedProps,
@@ -48,5 +47,4 @@ export const truncateArray = ({
     truncatedProps: state.truncatedProps,
   }
 }
-/* eslint-enable fp/no-let, fp/no-loops, fp/no-mutation,
-   fp/no-mutating-methods, max-depth */
+/* eslint-enable fp/no-let, fp/no-loops, fp/no-mutation, max-depth */
