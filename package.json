@@ -54,7 +54,7 @@
     "lib": "src"
   },
   "dependencies": {
-    "guess-json-indent": "^3.0.0",
+    "guess-json-indent": "^3.0.1",
     "string-byte-length": "^3.0.1",
     "string-byte-slice": "^3.0.1"
   },
